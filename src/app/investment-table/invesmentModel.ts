@@ -1,4 +1,4 @@
-export interface ResultsModel {
+export interface InvestmentModel {
   year: number,
   investmentValue: number,
   interestYear: number,
