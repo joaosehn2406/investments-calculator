@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {BoardModel} from './board/board.model';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  onCalculate(data: BoardModel) {
+
+  }
 }
