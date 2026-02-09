@@ -1,0 +1,47 @@
+.container {
+  background: linear-gradient(to bottom, #2FBD6B, #1F8F54);
+  max-width: 700px;
+  width: 100%;
+  padding: 25px 30px;
+  border-radius: 5px;
+}
+
+.container form .user-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+form .user-details .input-box {
+  margin: 20px 0 40px 0;
+  width: calc(100% / 2 - 20px);
+  padding: 0 20px;
+}
+
+.user-details .input-box input {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  height: 45px;
+  width: 100%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding-left: 15px;
+  font-size: 16px;
+}
+
+.user-details .input-box span {
+  color: rgba(255, 255, 255, 0.90);
+}
+
+button {
+  padding: 0.6rem;
+  cursor: pointer;
+  width: 100%;
+  font-size: 20px;
+  font-weight: bolder;
+  border-radius: 6px;
+  border: none;
+  background: #7CFFB2;
+  color: #0B2F1B;
+}
