@@ -11,6 +11,8 @@ import {InvestmentModel} from './investment-table/invesmentModel';
 })
 export class AppComponent {
 
+  hideText: boolean = false
+
   private appService = inject(AppService)
   result: InvestmentModel[] = []
 
