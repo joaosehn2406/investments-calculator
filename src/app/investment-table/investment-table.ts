@@ -1,12 +1,15 @@
 import {Component, Input} from '@angular/core';
 import {InvestmentModel} from './invesmentModel';
 import * as XLSX from 'xlsx';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-investment-table',
-  standalone: false,
   templateUrl: './investment-table.html',
   styleUrl: './investment-table.css',
+  imports: [
+    DecimalPipe
+  ]
 })
 export class InvestmentTable {
   @Input({required: true}) data!: InvestmentModel[]

@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Output, signal} from '@angular/core';
 import {BoardModel} from './board.model';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-board',
-  standalone: false,
   templateUrl: './board.component.html',
   styleUrl: './board.component.css',
+  imports: [
+    FormsModule
+  ]
 })
 export class BoardComponent {
   @Output() onClickCalculate = new EventEmitter<BoardModel>();
