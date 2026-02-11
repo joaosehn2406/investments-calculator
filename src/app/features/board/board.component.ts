@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output, signal} from '@angular/core';
-import {BoardModel} from './board.model';
+import {BoardModel} from '../../shared/models/board.model';
 import {FormsModule} from '@angular/forms';
 
 @Component({

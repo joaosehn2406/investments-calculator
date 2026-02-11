@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {InvestmentModel} from './invesmentModel';
+import {InvestmentModel} from '../../shared/models/investment.model';
 import * as XLSX from 'xlsx';
 import {DecimalPipe} from '@angular/common';
 

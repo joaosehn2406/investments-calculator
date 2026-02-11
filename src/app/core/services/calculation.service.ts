@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {BoardModel} from './board/board.model';
-import {InvestmentModel} from './investment-table/invesmentModel';
+import {BoardModel} from '../../shared/models/board.model';
+import {InvestmentModel} from '../../shared/models/investment.model';
 
 @Injectable({providedIn: 'root'})
-export class AppService {
+export class CalculationService {
 
   calculate(inputs: BoardModel): InvestmentModel[] {
     const results = []
