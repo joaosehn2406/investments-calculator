@@ -3,9 +3,9 @@
 <main>
   <app-board (onClickCalculate)="onCalculate($event)"/>
 
-  @if (!result.length) {
+  @if (!result().length) {
     <h3>Please enter some values and press "Calculate"</h3>
   } @else {
-    <app-investment-table [data]="result"/>
+    <app-investment-table [data]="result()"/>
   }
 </main>

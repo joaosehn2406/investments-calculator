@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {BoardModel} from './shared/models/board.model';
 import {InvestmentModel} from './shared/models/investment.model';
 import {HeaderComponent} from './features/header/header.component';
@@ -19,9 +19,9 @@ import {CalculationService} from './core/services/calculation.service';
 export class AppComponent {
 
   private calculationService = inject(CalculationService)
-  result: InvestmentModel[] = []
+  result = signal<InvestmentModel[]>([]);
 
   onCalculate(data: BoardModel) {
-    this.result = this.calculationService.calculate(data)
+    this.result.set(this.calculationService.calculate(data))
   }
 }
