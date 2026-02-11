@@ -3,7 +3,7 @@
   max-width: 920px;
   margin: 32px auto;
   border-collapse: collapse;
-  color: #baf8d4;
+  color: #bdbdbd;
 }
 
 .inv-table th,
@@ -13,7 +13,7 @@
 
 .inv-table th {
   text-align: left;
-  color: #bdbdbd;
+  color: #baf8d4;
   font-weight: 600;
 }
 

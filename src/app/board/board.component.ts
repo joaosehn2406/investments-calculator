@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, signal} from '@angular/core';
 import {BoardModel} from './board.model';
 
 @Component({
@@ -10,14 +10,17 @@ import {BoardModel} from './board.model';
 export class BoardComponent {
   @Output() onClickCalculate = new EventEmitter<BoardModel>();
 
-  data: BoardModel = {
+  defaultData: BoardModel = {
     initialInvestment: 10,
     annualInvestment: 0,
     expectedReturn: 5,
     duration: 10,
   };
 
+  data = signal<BoardModel>({...this.defaultData});
+
   onCalculate() {
-    this.onClickCalculate.emit(this.data)
+    this.onClickCalculate.emit(this.data());
+    this.data.set({...this.defaultData});
   }
 }

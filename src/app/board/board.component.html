@@ -3,19 +3,19 @@
     <div class="user-details">
       <div class="input-box">
         <span class="details">Initial investment</span>
-        <input type="number" [(ngModel)]="data.initialInvestment" name="initialInvestment" required/>
+        <input type="number" [(ngModel)]="data().initialInvestment" name="initialInvestment" required/>
       </div>
       <div class="input-box">
         <span class="details">Anual investment</span>
-        <input type="number" [(ngModel)]="data.annualInvestment" name="annualInvestment" required/>
+        <input type="number" [(ngModel)]="data().annualInvestment" name="annualInvestment" required/>
       </div>
       <div class="input-box">
         <span class="details">Expected Return</span>
-        <input type="number" [(ngModel)]="data.expectedReturn" name="expectedReturn" required/>
+        <input type="number" [(ngModel)]="data().expectedReturn" name="expectedReturn" required/>
       </div>
       <div class="input-box">
         <span class="details">Duration</span>
-        <input type="number" [(ngModel)]="data.duration" name="duration" required/>
+        <input type="number" [(ngModel)]="data().duration" name="duration" required/>
       </div>
     </div>
      <button class="calculate-button">CALCULATE</button>
