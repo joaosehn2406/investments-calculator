@@ -6,7 +6,7 @@ import {InvestmentModel} from '../../shared/models/investment.model';
 export class CalculationService {
 
   calculate(inputs: BoardModel): InvestmentModel[] {
-    const results = []
+    const results: InvestmentModel[] = []
     const r = inputs.expectedReturn / 100
 
     let balance = inputs.initialInvestment

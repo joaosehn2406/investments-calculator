@@ -30,7 +30,7 @@ form .user-details .input-box {
   font-size: 16px;
 }
 
-.user-details .input-box span {
+.user-details .input-box {
   color: rgba(255, 255, 255, 0.90);
 }
 
@@ -44,4 +44,32 @@ button {
   border: none;
   background: #7CFFB2;
   color: #0B2F1B;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background: #9af4c1;
+  color: #0B2F1B;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(3px);
+  box-shadow: 0 7px 0 rgba(0, 0, 0, 0.35);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.error {
+  color: #932323;
+  font-size: 1rem;
+  margin-top: 4px;
+  display: block;
 }

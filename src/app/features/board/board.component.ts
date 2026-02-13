@@ -1,29 +1,33 @@
-import {Component, EventEmitter, Output, signal} from '@angular/core';
+import {Component, inject, output} from '@angular/core';
 import {BoardModel} from '../../shared/models/board.model';
-import {FormsModule} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrl: './board.component.css',
+  standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class BoardComponent {
-  @Output() onClickCalculate = new EventEmitter<BoardModel>();
+  calculate = output<BoardModel>()
 
-  defaultData: BoardModel = {
-    initialInvestment: 10,
-    annualInvestment: 0,
-    expectedReturn: 5,
-    duration: 10,
-  };
+  private fb = inject(FormBuilder)
 
-  data = signal<BoardModel>({...this.defaultData});
+  form = this.fb.group({
+    initialInvestment: [null as number | null, [Validators.required, Validators.min(1)]],
+    annualInvestment: [null as number | null, [Validators.required, Validators.min(0)]],
+    expectedReturn: [null as number | null, [Validators.required, Validators.min(1), Validators.max(200)]],
+    duration: [null as number | null, [Validators.required, Validators.min(1), Validators.max(80)]]
+  })
 
   onCalculate() {
-    this.onClickCalculate.emit(this.data());
-    this.data.set({...this.defaultData});
+    if (this.form.invalid) return;
+
+    this.calculate.emit(this.form.value as BoardModel);
+    this.form.reset();
   }
 }

@@ -1,17 +1,18 @@
 import {Component, Input} from '@angular/core';
 import {InvestmentModel} from '../../shared/models/investment.model';
 import * as XLSX from 'xlsx';
-import {DecimalPipe} from '@angular/common';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-investment-table',
-  templateUrl: './investment-table.html',
-  styleUrl: './investment-table.css',
+  templateUrl: './investment.table.component.html',
+  standalone: true,
+  styleUrl: './investment.table.component.css',
   imports: [
-    DecimalPipe
+    CurrencyPipe
   ]
 })
-export class InvestmentTable {
+export class InvestmentTableComponent {
   @Input({required: true}) data!: InvestmentModel[]
 
   exportToExcel() {

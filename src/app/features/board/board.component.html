@@ -1,23 +1,41 @@
 <section class="container">
-  <form (ngSubmit)="onCalculate()">
+  <form [formGroup]="form" (ngSubmit)="onCalculate()">
     <div class="user-details">
       <div class="input-box">
         <span class="details">Initial investment</span>
-        <input type="number" [(ngModel)]="data().initialInvestment" name="initialInvestment" required/>
+        <input type="number" formControlName="initialInvestment" placeholder="Type your initial investment"/>
+        @if (form.get('initialInvestment')?.hasError('min') && form.get('initialInvestment')?.touched) {
+          <span class="error">Must be at least 1</span>
+        }
       </div>
       <div class="input-box">
-        <span class="details">Anual investment</span>
-        <input type="number" [(ngModel)]="data().annualInvestment" name="annualInvestment" required/>
+        <span class="details">Annual investment</span>
+        <input type="number" formControlName="annualInvestment" placeholder="Type your annual investment"/>
+        @if (form.get('annualInvestment')?.hasError('min') && form.get('annualInvestment')?.touched) {
+          <span class="error">Must be at least 0</span>
+        }
       </div>
       <div class="input-box">
         <span class="details">Expected Return</span>
-        <input type="number" [(ngModel)]="data().expectedReturn" name="expectedReturn" required/>
+        <input type="number" formControlName="expectedReturn" placeholder="Type your expected interest"/>
+        @if (form.get('expectedReturn')?.hasError('min') && form.get('expectedReturn')?.touched) {
+          <span class="error">Must be at least 0.1%</span>
+        }
+        @if (form.get('expectedReturn')?.hasError('max') && form.get('expectedReturn')?.touched) {
+          <span class="error">Maximum is 200%</span>
+        }
       </div>
       <div class="input-box">
         <span class="details">Duration</span>
-        <input type="number" [(ngModel)]="data().duration" name="duration" required/>
+        <input type="number" formControlName="duration" placeholder="Type the investment duration"/>
+        @if (form.get('duration')?.hasError('min') && form.get('duration')?.touched) {
+          <span class="error">Must be at least 1 year</span>
+        }
+        @if (form.get('duration')?.hasError('max') && form.get('duration')?.touched) {
+          <span class="error">Maximum is 50 years</span>
+        }
       </div>
     </div>
-     <button class="calculate-button">CALCULATE</button>
+     <button [disabled]="form.invalid" class="calculate-button">CALCULATE</button>
   </form>
 </section>
