@@ -1,6 +1,7 @@
 export interface BoardModel {
   initialInvestment: number;
-  annualInvestment: number;
+  financialContribution: number;
   expectedReturn: number;
   duration: number;
+  period: string;
 }

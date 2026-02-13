@@ -1,7 +1,8 @@
 export interface InvestmentModel {
-  year: number,
+  period: number,
   investmentValue: number,
   interestYear: number,
   totalInterest: number,
-  investedCapital: number
+  investedCapital: number,
+  investmentType: string
 }

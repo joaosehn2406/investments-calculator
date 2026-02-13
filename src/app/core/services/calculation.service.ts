@@ -17,17 +17,18 @@ export class CalculationService {
       const interestYear = balance * r
       balance += interestYear
 
-      totalInvested += inputs.annualInvestment
-      balance += inputs.annualInvestment
+      totalInvested += inputs.financialContribution
+      balance += inputs.financialContribution
 
       totalInterest = balance - totalInvested
 
       results.push({
-        year,
+        period: year,
         investedCapital: totalInvested,
         interestYear,
         investmentValue: balance,
-        totalInterest
+        totalInterest,
+        investmentType: inputs.period
       })
     }
 

@@ -2,18 +2,26 @@
   <table class="inv-table">
     <thead>
     <tr>
-      <th>Year</th>
-      <th>Investment Value</th>
-      <th>Interest (Year)</th>
-      <th>Total Interest</th>
-      <th>Invested Capital</th>
+      @if (data[0].investmentType === 'year') {
+        <th>Year</th>
+        <th>Investment Value</th>
+        <th>Interest (yearly)</th>
+        <th>Total Interest</th>
+        <th>Invested Capital</th>
+      } @else {
+        <th>Month</th>
+        <th>Investment Value</th>
+        <th>Interest (monthly)</th>
+        <th>Total Interest</th>
+        <th>Invested Capital</th>
+      }
     </tr>
     </thead>
 
     <tbody>
-      @for (d of data; track d.year) {
+      @for (d of data; track d.period) {
         <tr>
-          <td>{{ d.year }}</td>
+          <td>{{ d.period }}</td>
           <td>{{ d.investmentValue | currency:'USD':'symbol':'1.2-2' }}</td>
           <td>{{ d.interestYear     | currency:'USD':'symbol':'1.2-2' }}</td>
           <td>{{ d.totalInterest    | currency:'USD':'symbol':'1.2-2' }}</td>
