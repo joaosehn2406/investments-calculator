@@ -5,6 +5,7 @@ import {HeaderComponent} from './features/header/header.component';
 import {BoardComponent} from './features/board/board.component';
 import {InvestmentTableComponent} from './features/investment-table/investment.table.component';
 import {CalculationService} from './core/services/calculation.service';
+import {FooterComponent} from './features/footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import {CalculationService} from './core/services/calculation.service';
   imports: [
     HeaderComponent,
     BoardComponent,
+    FooterComponent,
     InvestmentTableComponent
   ],
   styleUrl: './app.component.css'

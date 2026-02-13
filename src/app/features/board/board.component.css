@@ -13,7 +13,7 @@
 }
 
 form .user-details .input-box {
-  margin: 20px 0 40px 0;
+  margin: 10px 0 10px 0;
   width: calc(100% / 2 - 20px);
   padding: 0 20px;
 }
@@ -72,4 +72,21 @@ input::placeholder {
   font-size: 1rem;
   margin-top: 4px;
   display: block;
+}
+
+.date-selection {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.date-selection h4 {
+  margin-bottom: 10px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  cursor: pointer;
 }
