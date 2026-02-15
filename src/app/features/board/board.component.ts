@@ -1,6 +1,7 @@
 import {Component, inject, output} from '@angular/core';
 import {BoardModel} from '../../shared/models/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {LocalStorageService} from '../../core/services/localStorage.service';
 
 @Component({
   selector: 'app-board',
@@ -14,6 +15,9 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angula
 })
 export class BoardComponent {
   calculate = output<BoardModel>();
+  hasCalculated = false;
+
+  protected localStorageService = inject(LocalStorageService)
 
   private fb = inject(FormBuilder);
 
@@ -41,6 +45,10 @@ export class BoardComponent {
 
   onCalculate() {
     if (this.form.invalid) return;
+
+    this.hasCalculated = true
+
+    this.localStorageService.list()
 
     this.calculate.emit(this.form.value as BoardModel);
     this.form.reset({

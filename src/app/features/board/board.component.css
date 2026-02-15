@@ -98,7 +98,14 @@ input::placeholder {
   accent-color: #7CFFB2;
 }
 
-button {
+.button-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.calculate-button {
   padding: 14px;
   cursor: pointer;
   width: 100%;
@@ -114,19 +121,35 @@ button {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-button:hover:not(:disabled) {
+.calculate-button:hover:not(:disabled) {
   background: #9af4c1;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-button:active:not(:disabled) {
+.calculate-button:active:not(:disabled) {
   transform: translateY(0);
 }
 
-button:disabled {
+.calculate-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.compare-button {
+  padding: 14px;
+  cursor: pointer;
+  width: 30%;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  background: #0EA5A3;
+  color: #062119;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 600px) {

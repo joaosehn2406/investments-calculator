@@ -84,8 +84,16 @@
       </div>
     </div>
 
-    <button type="submit" [disabled]="form.invalid" class="calculate-button">
-      CALCULATE
-    </button>
+    <div class="button-actions">
+      <button type="submit" [disabled]="form.invalid" class="calculate-button">
+        CALCULATE
+      </button>
+
+      @if (hasCalculated && this.localStorageService.list().length > 1) {
+        <button class="compare-button">
+          COMPARE WITH
+        </button>
+      }
+    </div>
   </form>
 </section>
