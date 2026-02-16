@@ -77,4 +77,15 @@ export class InvestmentTableComponent {
     this.showInputField = false;
     this.form.reset({investmentTitle: '', investmentDescription: ''});
   }
+
+  deleteInvestments() {
+    const message = this.localStorageService.delete();
+
+    if(message.includes('nothing')) {
+      this.toastService.show(message, 'error')
+      return
+    }
+
+    this.toastService.show(message);
+  }
 }

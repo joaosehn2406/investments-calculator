@@ -25,4 +25,15 @@ export class LocalStorageService {
     const next = [item, ...current];
     localStorage.setItem(KEY, JSON.stringify(next));
   }
+
+  delete(): string {
+    const current = this.read();
+
+    if (current.length === 0) {
+      return "There's nothing to delete!";
+    }
+
+    localStorage.clear();
+    return 'All investments were deleted! ✅';
+  }
 }
