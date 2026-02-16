@@ -1,7 +1,8 @@
-import {Component, inject, output} from '@angular/core';
+import {Component, inject, output, signal} from '@angular/core';
 import {BoardModel} from '../../shared/models/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
+import {LocalStorageModel} from '../../shared/models/localStorage.model';
 
 @Component({
   selector: 'app-board',
@@ -15,7 +16,10 @@ import {LocalStorageService} from '../../core/services/localStorage.service';
 })
 export class BoardComponent {
   calculate = output<BoardModel>();
-  hasCalculated = false;
+
+  showModal = signal(false);
+
+  savedInvestments = signal<LocalStorageModel[]>([]);
 
   protected localStorageService = inject(LocalStorageService)
 
@@ -46,11 +50,14 @@ export class BoardComponent {
   onCalculate() {
     if (this.form.invalid) return;
 
-    this.hasCalculated = true
-
     this.calculate.emit(this.form.value as BoardModel);
     this.form.reset({
       period: 'year'
     });
+  }
+
+  openModal() {
+    this.savedInvestments.set(this.localStorageService.list());
+    this.showModal.set(true);
   }
 }

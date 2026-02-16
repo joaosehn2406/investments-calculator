@@ -89,9 +89,9 @@
         CALCULATE
       </button>
 
-      @if (hasCalculated && this.localStorageService.list().length > 1) {
-        <button class="compare-button">
-          COMPARE WITH
+      @if (this.localStorageService.list().length > 0) {
+        <button class="visualize-investments" (click)="openModal()">
+          VISUALIZE INVESTMENTS
         </button>
       }
     </div>
