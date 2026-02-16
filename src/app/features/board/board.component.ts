@@ -48,8 +48,6 @@ export class BoardComponent {
 
     this.hasCalculated = true
 
-    this.localStorageService.list()
-
     this.calculate.emit(this.form.value as BoardModel);
     this.form.reset({
       period: 'year'

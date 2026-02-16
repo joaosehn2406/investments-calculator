@@ -2,7 +2,7 @@
   <table class="inv-table">
     <thead>
     <tr>
-      @if (data[0].investmentType === 'year') {
+      @if (data()[0].investmentType === 'year') {
         <th>Year</th>
         <th>Investment Value</th>
         <th>Interest (yearly)</th>
@@ -19,7 +19,7 @@
     </thead>
 
     <tbody>
-      @for (d of data; track d.period) {
+      @for (d of data(); track d.period) {
         <tr>
           <td>{{ d.period }}</td>
           <td>{{ d.investmentValue | currency:'USD':'symbol':'1.2-2' }}</td>
@@ -31,9 +31,45 @@
     </tbody>
   </table>
 
+  @if (showInputField) {
+    <div class="input-fields" [formGroup]="form">
+      <div class="input-wrap">
+        <label for="title">Title</label>
+        <input
+          id="title"
+          type="text"
+          placeholder="Type your investment title"
+          formControlName="investmentTitle"
+        />
+
+        <span class="char-counter">
+        {{ form.get('investmentTitle')?.value?.length ?? 0 }} / 120
+      </span>
+      </div>
+
+      <div class="input-wrap">
+        <label for="description">Description</label>
+        <input
+          id="description"
+          type="text"
+          placeholder="Type your investment description"
+          formControlName="investmentDescription"
+        />
+
+        <span class="char-counter">
+          {{ form.get('investmentDescription')?.value?.length ?? 0 }} / 250
+        </span>
+      </div>
+    </div>
+  }
+
   <div class="actions">
-    <button (click)="exportToExcel()" class="export-bt">
-      <a>Export to Excel</a>
+    <button (click)="onPrimaryAction()" class="actions-bt" [disabled]="form.invalid && showInputField">
+      {{ showInputField ? 'Confirm' : 'Save investment' }}
+    </button>
+
+    <button (click)="exportToExcel()" class="actions-bt">
+      Export to Excel
     </button>
   </div>
 </section>

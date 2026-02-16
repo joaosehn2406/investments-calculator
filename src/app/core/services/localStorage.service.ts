@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
-import { LocalStorageModel } from '../../shared/models/localStorage.model';
+import {Injectable} from '@angular/core';
+import {LocalStorageModel} from '../../shared/models/localStorage.model';
 
 const KEY = 'investment_history_v1';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class LocalStorageService {
 
   private read(): LocalStorageModel[] {
     const data = localStorage.getItem(KEY);
     if (!data) return [];
-    try { return JSON.parse(data) as LocalStorageModel[]; }
-    catch { return []; }
+    try {
+      return JSON.parse(data) as LocalStorageModel[];
+    } catch {
+      return [];
+    }
   }
 
   list(): LocalStorageModel[] {
