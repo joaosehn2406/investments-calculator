@@ -89,11 +89,15 @@
         CALCULATE
       </button>
 
-      @if (this.localStorageService.list().length > 0) {
-        <button class="visualize-investments" (click)="openModal()">
+      @if (localStorageService.list().length > 0) {
+        <button type="button" class="visualize-investments" (click)="openModal()">
           VISUALIZE INVESTMENTS
         </button>
       }
     </div>
   </form>
 </section>
+
+@if (showModal()) {
+  <app-modal [investments]="savedInvestments()"/>
+}

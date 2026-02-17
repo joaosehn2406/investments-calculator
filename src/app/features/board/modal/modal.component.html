@@ -3,16 +3,24 @@
 
     <header class="modal-header">
       <h2>Saved Investments</h2>
-      <button>×</button>
+      <button class="close-button">×</button>
     </header>
 
     <div class="search-box">
       <input
         type="text"
-        placeholder="Search..."
+        placeholder="Search by investment title or description..."
       />
     </div>
 
+    <div class="investments-list">
+      @for (item of investments() | investmentSearchFilter: searchTerm() : ['title', 'description']; track item.id) {
+        <div class="investment-item">
+          <strong>{{ item.title }}</strong>
+          <p>{{ item.description }}</p>
+        </div>
+      }
+    </div>
 
   </div>
 </div>

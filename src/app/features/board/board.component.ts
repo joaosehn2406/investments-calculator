@@ -3,6 +3,7 @@ import {BoardModel} from '../../shared/models/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
 import {LocalStorageModel} from '../../shared/models/localStorage.model';
+import {ModalComponent} from './modal/modal.component';
 
 @Component({
   selector: 'app-board',
@@ -11,7 +12,8 @@ import {LocalStorageModel} from '../../shared/models/localStorage.model';
   standalone: true,
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalComponent
   ]
 })
 export class BoardComponent {
