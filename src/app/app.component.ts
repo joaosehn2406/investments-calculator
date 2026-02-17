@@ -31,4 +31,8 @@ export class AppComponent {
 
     this.result.set(results)
   }
+
+  onDeleteAllData() {
+    this.result.set([])
+  }
 }

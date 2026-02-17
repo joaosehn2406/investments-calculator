@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import {InvestmentModel} from '../../shared/models/investment.model';
 import * as XLSX from 'xlsx';
 import {CurrencyPipe} from '@angular/common';
@@ -18,6 +18,7 @@ import {LocalStorageService} from '../../core/services/localStorage.service';
 })
 export class InvestmentTableComponent {
   readonly data = input.required<InvestmentModel[]>();
+  readonly deleteAllData = output<void>()
 
   private toastService = inject(ToastService);
 
@@ -85,6 +86,8 @@ export class InvestmentTableComponent {
       this.toastService.show(message, 'error')
       return
     }
+
+    this.deleteAllData.emit()
 
     this.toastService.show(message);
   }
