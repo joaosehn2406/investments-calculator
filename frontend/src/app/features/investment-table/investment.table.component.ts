@@ -1,6 +1,6 @@
 import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {InvestmentModel} from '../../shared/model/investment.model';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 import {CurrencyPipe} from '@angular/common';
 import {ToastService} from '../../core/services/toast.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -44,13 +44,29 @@ export class InvestmentTableComponent {
     });
   }
 
-  exportToExcel() {
-    const workSheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data());
-    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, workSheet, 'Sheet1');
+  async exportToExcel() {
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet('Investments');
+
+    sheet.columns = [
+      {header: 'Period', key: 'period', width: 10},
+      {header: 'Investment Value', key: 'investmentValue', width: 20},
+      {header: 'Interest', key: 'interestYear', width: 18},
+      {header: 'Total Interest', key: 'totalInterest', width: 18},
+      {header: 'Invested Capital', key: 'investedCapital', width: 20},
+    ];
+
+    this.data().forEach(d => sheet.addRow(d));
 
     try {
-      XLSX.writeFile(workbook, 'investment-exported.xlsx');
+      const buffer = await workbook.xlsx.writeBuffer();
+      const blob = new Blob([buffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'investment-exported.xlsx';
+      a.click();
+      URL.revokeObjectURL(url);
       this.toastService.show('Excel exported successfully! ✅');
     } catch (error) {
       this.toastService.show('Error on exporting', 'error');
