@@ -25,11 +25,11 @@ export class AppComponent {
 
   private calculationService = inject(CalculationService)
   result = signal<InvestmentModel[]>([]);
+  selectedPeriod = signal<string>('year')
 
   onCalculate(data: BoardModel) {
-    const results = this.calculationService.calculate(data)
-
-    this.result.set(results)
+    this.result.set(this.calculationService.calculate(data));
+    this.selectedPeriod.set(data.period);
   }
 
   onDeleteAllData() {

@@ -99,5 +99,5 @@
 </section>
 
 @if (showModal()) {
-  <app-modal [investments]="savedInvestments()"/>
+  <app-modal [investments]="savedInvestments()" (closeModal)="closeModal()"/>
 }

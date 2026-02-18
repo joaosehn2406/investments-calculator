@@ -62,4 +62,8 @@ export class BoardComponent {
     this.savedInvestments.set(this.localStorageService.list());
     this.showModal.set(true);
   }
+
+  closeModal() {
+    this.showModal.set(false);
+  }
 }
