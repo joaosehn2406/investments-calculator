@@ -1,6 +1,6 @@
 import {Component, inject, signal} from '@angular/core';
-import {BoardModel, PeriodType} from './shared/models/board.model';
-import {InvestmentModel} from './shared/models/investment.model';
+import {BoardModel, CurrencyType, PeriodType} from './shared/model/board.model';
+import {InvestmentModel} from './shared/model/investment.model';
 import {HeaderComponent} from './features/header/header.component';
 import {BoardComponent} from './features/board/board.component';
 import {InvestmentTableComponent} from './features/investment-table/investment.table.component';
@@ -26,10 +26,12 @@ export class AppComponent {
   private calculationService = inject(CalculationService)
   result = signal<InvestmentModel[]>([]);
   selectedPeriod = signal<PeriodType>('year')
+  selectedCurrency = signal<CurrencyType>('USD')
 
   onCalculate(data: BoardModel) {
     this.result.set(this.calculationService.calculate(data));
     this.selectedPeriod.set(data.period);
+    this.selectedCurrency.set(data.currency)
   }
 
   onDeleteAllData() {

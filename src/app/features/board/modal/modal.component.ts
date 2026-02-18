@@ -1,5 +1,5 @@
 import {Component, input, output, signal} from '@angular/core';
-import {LocalStorageModel} from '../../../shared/models/localStorage.model';
+import {LocalStorageModel} from '../../../shared/model/localStorage.model';
 import {SearchFilterPipe} from './search-filter.pipe';
 import {DatePipe} from '@angular/common';
 

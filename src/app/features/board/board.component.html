@@ -59,28 +59,37 @@
         }
       </div>
 
-      <div class="interest-section">
-        <span class="details">Interest:</span>
-        <div class="radio-group">
-          <label class="radio-label">
-            <input
-              type="radio"
-              name="period"
-              value="year"
-              formControlName="period"
-            />
-            <span>Year</span>
-          </label>
-          <label class="radio-label">
-            <input
-              type="radio"
-              name="period"
-              value="month"
-              formControlName="period"
-            />
-            <span>Month</span>
-          </label>
+      <div class="settings-section">
+
+        <div class="interest-section">
+          <span class="details">Interest:</span>
+          <div class="toggle-pill">
+            <input type="radio" id="period-year" name="period" value="year" formControlName="period"/>
+            <label for="period-year">Yearly</label>
+
+            <input type="radio" id="period-month" name="period" value="month" formControlName="period"/>
+            <label for="period-month">Monthly</label>
+          </div>
         </div>
+
+        <div class="interest-section">
+          <span class="details">Currency:</span>
+          <div class="toggle-pill">
+
+            @for (type of currencyTypes; track type) {
+              <input
+                type="radio"
+                [id]="'currency-' + type"
+                name="currency"
+                [value]="type"
+                formControlName="currency"
+              />
+              <label [for]="'currency-' + type">{{ type }}</label>
+            }
+
+          </div>
+        </div>
+
       </div>
     </div>
 

@@ -1,8 +1,8 @@
 import {Component, inject, output, signal} from '@angular/core';
-import {BoardModel} from '../../shared/models/board.model';
+import {BoardModel, CURRENCIES, CurrencyType} from '../../shared/model/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
-import {LocalStorageModel} from '../../shared/models/localStorage.model';
+import {LocalStorageModel} from '../../shared/model/localStorage.model';
 import {ModalComponent} from './modal/modal.component';
 
 @Component({
@@ -22,6 +22,8 @@ export class BoardComponent {
   showModal = signal(false);
 
   savedInvestments = signal<LocalStorageModel[]>([]);
+
+  currencyTypes = Object.keys(CURRENCIES) as CurrencyType[]
 
   protected localStorageService = inject(LocalStorageService)
 
@@ -47,6 +49,7 @@ export class BoardComponent {
       Validators.max(80)
     ]],
     period: ['year', Validators.required],
+    currency: [this.currencyTypes[0], Validators.required]
   });
 
   onCalculate() {

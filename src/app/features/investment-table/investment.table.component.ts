@@ -1,12 +1,12 @@
 import {Component, inject, input, output, signal} from '@angular/core';
-import {InvestmentModel} from '../../shared/models/investment.model';
+import {InvestmentModel} from '../../shared/model/investment.model';
 import * as XLSX from 'xlsx';
 import {CurrencyPipe} from '@angular/common';
 import {ToastService} from '../../core/services/toast.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
-import {LocalStorageModel} from '../../shared/models/localStorage.model';
-import {PeriodType} from '../../shared/models/board.model';
+import {LocalStorageModel} from '../../shared/model/localStorage.model';
+import {CurrencyType, PeriodType} from '../../shared/model/board.model';
 
 @Component({
   selector: 'app-investment-table',
@@ -21,6 +21,7 @@ import {PeriodType} from '../../shared/models/board.model';
 export class InvestmentTableComponent {
   readonly data = input.required<InvestmentModel[]>();
   readonly period = input.required<PeriodType>();
+  readonly currency = input.required<CurrencyType>()
 
   readonly deleteAllData = output<void>()
 

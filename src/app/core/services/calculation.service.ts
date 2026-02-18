@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BoardModel} from '../../shared/models/board.model';
-import {InvestmentModel} from '../../shared/models/investment.model';
+import {BoardModel} from '../../shared/model/board.model';
+import {InvestmentModel} from '../../shared/model/investment.model';
 
 @Injectable({providedIn: 'root'})
 export class CalculationService {
@@ -8,7 +8,7 @@ export class CalculationService {
   calculate(inputs: BoardModel): InvestmentModel[] {
     const results: InvestmentModel[] = [];
     const isMonthly = inputs.period === 'month';
-    
+
     const periodsTotal = isMonthly ? inputs.duration * 12 : inputs.duration;
     const rate = isMonthly ? (inputs.expectedReturn / 100) / 12 : inputs.expectedReturn / 100;
     const contribution = isMonthly ? inputs.financialContribution / 12 : inputs.financialContribution;

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LocalStorageModel} from '../../shared/models/localStorage.model';
+import {LocalStorageModel} from '../../shared/model/localStorage.model';
 
 const KEY = 'investment_history_v1';
 

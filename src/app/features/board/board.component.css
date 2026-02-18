@@ -1,6 +1,6 @@
 .container {
   background: linear-gradient(to bottom, #2FBD6B, #1F8F54);
-  max-width: 700px;
+  max-width: 800px;
   width: 100%;
   padding: 30px;
   border-radius: 8px;
@@ -35,13 +35,57 @@ form .user-details .input-box.full-width {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+.settings-section {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin: auto;
+}
+
 .interest-section {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 14px;
   width: 100%;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   padding-top: 32px;
   margin-top: 4px;
+}
+
+.toggle-pill {
+  display: flex;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.toggle-pill label {
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 90px;
+  user-select: none;
+}
+
+.toggle-pill input[type="radio"] {
+  display: none;
+}
+
+.toggle-pill input[type="radio"]:checked + label {
+  color: #0B2F1B;
+  background: #7CFFB2;
+  box-shadow: 0 2px 8px rgba(124, 255, 178, 0.3);
+}
+
+.interest-section .details {
+  margin-bottom: 0;
 }
 
 .user-details .input-box input[type="number"] {

@@ -22,10 +22,10 @@
       @for (d of data(); track d.period) {
         <tr>
           <td>{{ d.period }}</td>
-          <td>{{ d.investmentValue | currency:'USD':'symbol':'1.2-2' }}</td>
-          <td>{{ d.interestYear     | currency:'USD':'symbol':'1.2-2' }}</td>
-          <td>{{ d.totalInterest    | currency:'USD':'symbol':'1.2-2' }}</td>
-          <td>{{ d.investedCapital  | currency:'USD':'symbol':'1.2-2' }}</td>
+          <td>{{ d.investmentValue | currency:currency():'symbol':'1.2-2' }}</td>
+          <td>{{ d.interestYear     | currency:currency(): 'symbol':'1.2-2' }}</td>
+          <td>{{ d.totalInterest    | currency:currency(): 'symbol':'1.2-2' }}</td>
+          <td>{{ d.investedCapital  | currency:currency(): 'symbol':'1.2-2' }}</td>
         </tr>
       }
     </tbody>
@@ -64,7 +64,7 @@
   }
 
   <div class="actions">
-    <button (click)="onPrimaryAction()" class="actions-bt" [disabled]="form.invalid && showInputField">
+    <button (click)="onPrimaryAction()" class="actions-bt" [disabled]="form.invalid && showInputField()">
       {{ showInputField() ? 'Confirm' : 'Save investment' }}
     </button>
 
