@@ -1,4 +1,4 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, inject, input, output, signal} from '@angular/core';
 import {InvestmentModel} from '../../shared/models/investment.model';
 import * as XLSX from 'xlsx';
 import {CurrencyPipe} from '@angular/common';
@@ -6,6 +6,7 @@ import {ToastService} from '../../core/services/toast.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
 import {LocalStorageModel} from '../../shared/models/localStorage.model';
+import {PeriodType} from '../../shared/models/board.model';
 
 @Component({
   selector: 'app-investment-table',
@@ -19,7 +20,7 @@ import {LocalStorageModel} from '../../shared/models/localStorage.model';
 })
 export class InvestmentTableComponent {
   readonly data = input.required<InvestmentModel[]>();
-  readonly period = input.required<string>();
+  readonly period = input.required<PeriodType>();
 
   readonly deleteAllData = output<void>()
 
@@ -34,7 +35,7 @@ export class InvestmentTableComponent {
     investmentDescription: ['', [Validators.required, Validators.maxLength(250)]]
   });
 
-  showInputField: boolean = false
+  showInputField = signal<boolean>(false);
 
   exportToExcel() {
     const workSheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data());
@@ -50,8 +51,8 @@ export class InvestmentTableComponent {
   }
 
   onPrimaryAction() {
-    if (!this.showInputField) {
-      this.showInputField = true;
+    if (!this.showInputField()) {
+      this.showInputField.set(true);
       return
     }
 
@@ -73,20 +74,20 @@ export class InvestmentTableComponent {
       title: investmentTitle,
       periodType: this.period(),
       description: investmentDescription,
-      results: this.data
+      results: this.data()
     }
 
     this.localStorageService.add(payload);
 
     this.toastService.show('Investment saved! ✅');
-    this.showInputField = false;
+    this.showInputField.set(false);
     this.form.reset({investmentTitle: '', investmentDescription: ''});
   }
 
   deleteInvestments() {
     const message = this.localStorageService.delete();
 
-    if(message.includes('nothing')) {
+    if (message.includes('nothing')) {
       this.toastService.show(message, 'error')
       return
     }

@@ -53,9 +53,6 @@ export class BoardComponent {
     if (this.form.invalid) return;
 
     this.calculate.emit(this.form.value as BoardModel);
-    this.form.reset({
-      period: 'year'
-    });
   }
 
   openModal() {

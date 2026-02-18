@@ -33,7 +33,7 @@ export class LocalStorageService {
       return "There's nothing to delete!";
     }
 
-    localStorage.clear();
+    localStorage.removeItem(KEY);
     return 'All investments were deleted! ✅';
   }
 }

@@ -1,5 +1,5 @@
 import {Component, inject, signal} from '@angular/core';
-import {BoardModel} from './shared/models/board.model';
+import {BoardModel, PeriodType} from './shared/models/board.model';
 import {InvestmentModel} from './shared/models/investment.model';
 import {HeaderComponent} from './features/header/header.component';
 import {BoardComponent} from './features/board/board.component';
@@ -25,7 +25,7 @@ export class AppComponent {
 
   private calculationService = inject(CalculationService)
   result = signal<InvestmentModel[]>([]);
-  selectedPeriod = signal<string>('year')
+  selectedPeriod = signal<PeriodType>('year')
 
   onCalculate(data: BoardModel) {
     this.result.set(this.calculationService.calculate(data));

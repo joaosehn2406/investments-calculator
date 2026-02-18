@@ -31,7 +31,7 @@
     </tbody>
   </table>
 
-  @if (showInputField) {
+  @if (showInputField()) {
     <div class="input-fields" [formGroup]="form">
       <div class="input-wrap">
         <label for="title">Title</label>
@@ -65,7 +65,7 @@
 
   <div class="actions">
     <button (click)="onPrimaryAction()" class="actions-bt" [disabled]="form.invalid && showInputField">
-      {{ showInputField ? 'Confirm' : 'Save investment' }}
+      {{ showInputField() ? 'Confirm' : 'Save investment' }}
     </button>
 
     <button (click)="exportToExcel()" class="actions-bt">

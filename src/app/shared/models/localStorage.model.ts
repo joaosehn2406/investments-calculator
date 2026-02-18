@@ -1,11 +1,11 @@
 import {InvestmentModel} from './investment.model';
-import {InputSignal} from '@angular/core';
+import {PeriodType} from './board.model';
 
 export interface LocalStorageModel {
   id: string,
   title: string | null,
   description: string | null,
-  periodType: string | null,
+  periodType: PeriodType | null,
   createdAt: string,
-  results:  InputSignal<InvestmentModel[]>
+  results:  InvestmentModel[]
 }
