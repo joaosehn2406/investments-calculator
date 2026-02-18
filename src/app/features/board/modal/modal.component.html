@@ -10,6 +10,8 @@
       <input
         type="text"
         placeholder="Search by investment title or description..."
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value.trim().toLowerCase())"
       />
     </div>
 
