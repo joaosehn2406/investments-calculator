@@ -49,7 +49,7 @@
           id="duration"
           type="number"
           formControlName="duration"
-          placeholder="Type the investment duration"
+          placeholder="Type the investment duration (years)"
         />
         @if (form.get('duration')?.hasError('min') && form.get('duration')?.touched) {
           <span class="error">Must be at least 1 year</span>
