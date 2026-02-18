@@ -87,6 +87,12 @@
   box-shadow: 0 7px 0 rgba(0, 0, 0, 0.35);
 }
 
+.actions-bt--saveInvestment:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .input-fields {
   display: flex;
   flex-direction: column;

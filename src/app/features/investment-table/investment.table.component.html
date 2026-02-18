@@ -64,8 +64,9 @@
   }
 
   <div class="actions">
-    <button (click)="onPrimaryAction()" class="actions-bt" [disabled]="form.invalid && showInputField()">
-      {{ showInputField() ? 'Confirm' : 'Save investment' }}
+    <button (click)="onPrimaryAction()" class="actions-bt actions-bt--saveInvestment"
+            [disabled]="(form.invalid && showInputField()) || isResultSaved()">
+      {{ isResultSaved() ? 'Saved ✅' : showInputField() ? 'Confirm' : 'Save investment' }}
     </button>
 
     <button (click)="exportToExcel()" class="actions-bt">

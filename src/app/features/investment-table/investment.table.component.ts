@@ -1,4 +1,4 @@
-import {Component, inject, input, output, signal} from '@angular/core';
+import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {InvestmentModel} from '../../shared/model/investment.model';
 import * as XLSX from 'xlsx';
 import {CurrencyPipe} from '@angular/common';
@@ -25,18 +25,24 @@ export class InvestmentTableComponent {
 
   readonly deleteAllData = output<void>()
 
-  private toastService = inject(ToastService);
-
   private localStorageService = inject(LocalStorageService)
-
+  private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
+
+  isResultSaved = signal<boolean>(false)
+  showInputField = signal<boolean>(false);
 
   form = this.fb.group({
     investmentTitle: ['', [Validators.required, Validators.maxLength(120)]],
     investmentDescription: ['', [Validators.required, Validators.maxLength(250)]]
   });
 
-  showInputField = signal<boolean>(false);
+  constructor() {
+    effect(() => {
+      this.data();
+      this.isResultSaved.set(false);
+    });
+  }
 
   exportToExcel() {
     const workSheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data());
@@ -52,6 +58,8 @@ export class InvestmentTableComponent {
   }
 
   onPrimaryAction() {
+    if (this.isResultSaved()) return;
+
     if (!this.showInputField()) {
       this.showInputField.set(true);
       return
@@ -82,6 +90,7 @@ export class InvestmentTableComponent {
 
     this.toastService.show('Investment saved! ✅');
     this.showInputField.set(false);
+    this.isResultSaved.set(true);
     this.form.reset({investmentTitle: '', investmentDescription: ''});
   }
 
