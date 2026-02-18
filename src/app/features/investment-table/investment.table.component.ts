@@ -5,6 +5,7 @@ import {CurrencyPipe} from '@angular/common';
 import {ToastService} from '../../core/services/toast.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
+import {LocalStorageModel} from '../../shared/models/localStorage.model';
 
 @Component({
   selector: 'app-investment-table',
@@ -18,6 +19,8 @@ import {LocalStorageService} from '../../core/services/localStorage.service';
 })
 export class InvestmentTableComponent {
   readonly data = input.required<InvestmentModel[]>();
+  readonly period = input.required<string>();
+
   readonly deleteAllData = output<void>()
 
   private toastService = inject(ToastService);
@@ -64,10 +67,11 @@ export class InvestmentTableComponent {
 
     const {investmentTitle, investmentDescription} = this.form.getRawValue()
 
-    const payload = {
+    const payload: LocalStorageModel = {
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
       title: investmentTitle,
+      periodType: this.period(),
       description: investmentDescription,
       results: this.data
     }

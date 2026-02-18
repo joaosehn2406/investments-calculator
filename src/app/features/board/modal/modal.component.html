@@ -3,7 +3,7 @@
 
     <header class="modal-header">
       <h2>Saved Investments</h2>
-      <button class="close-button">×</button>
+      <button type="button" class="close-button" (click)="onCloseModal()">×</button>
     </header>
 
     <div class="search-box">
@@ -15,9 +15,26 @@
 
     <div class="investments-list">
       @for (item of investments() | investmentSearchFilter: searchTerm() : ['title', 'description']; track item.id) {
+
         <div class="investment-item">
-          <strong>{{ item.title }}</strong>
-          <p>{{ item.description }}</p>
+
+          <div class="item-left">
+            <div class="item-top">
+              <strong>{{ item.title }}</strong>
+              <span class="badge"
+                    [class.badge--annual]="item.periodType === 'year'"
+                    [class.badge--monthly]="item.periodType === 'month'">
+            {{ item.periodType === 'year' ? 'Annual' : 'Monthly' }}
+          </span>
+            </div>
+            <p>{{ item.description }}</p>
+          </div>
+
+          <div class="item-right">
+            <span class="item-date">{{ item.createdAt | date:'MMM d' }}</span>
+            <span class="item-arrow">&rsaquo;</span>
+          </div>
+
         </div>
       }
     </div>
