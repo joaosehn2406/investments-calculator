@@ -25,13 +25,23 @@ form .user-details .input-box.full-width {
 }
 
 .user-details .input-box .details,
-.user-details .input-box label {
+.user-details .input-box label,
+.interest-section {
   color: #fff;
   font-weight: 600;
   margin-bottom: 8px;
   display: block;
   font-size: 14px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.interest-section {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 32px;
+  margin-top: 4px;
 }
 
 .user-details .input-box input[type="number"] {
