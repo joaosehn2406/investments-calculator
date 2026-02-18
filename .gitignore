@@ -8,7 +8,7 @@ frontend/bazel-out/
 frontend/node_modules/
 
 # Angular cache
-frontend/.angular/
+.angular/
 
 # Debug logs
 npm-debug.log
