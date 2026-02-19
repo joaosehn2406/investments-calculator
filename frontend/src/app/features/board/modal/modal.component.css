@@ -151,3 +151,16 @@
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.25);
 }
+
+.investment-item.selected {
+  border: 1px solid rgba(124, 255, 178, 0.7);
+  background: rgba(100, 202, 142, 0.12);
+}
+
+.investment-item.selected strong {
+  color: #7CFFB2;
+}
+
+.investment-item.selected .item-arrow {
+  color: #7CFFB2;
+}

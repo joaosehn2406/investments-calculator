@@ -18,7 +18,7 @@
     <div class="investments-list">
       @for (item of investments() | investmentSearchFilter: searchTerm() : ['title', 'description']; track item.id) {
 
-        <div class="investment-item">
+        <div class="investment-item" (click)="onClickSelectItem(item)" [class.selected]="selectedIds().has(item.id)">
 
           <div class="item-left">
             <div class="item-top">
@@ -38,6 +38,12 @@
           </div>
 
         </div>
+      }
+
+      @if (selectedIds().size === 2) {
+        <button type="button" class="compare-button">
+          COMPARE
+        </button>
       }
     </div>
 
