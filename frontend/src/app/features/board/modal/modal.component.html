@@ -15,30 +15,31 @@
       />
     </div>
 
-    <div class="investments-list">
-      @for (item of investments() | investmentSearchFilter: searchTerm() : ['title', 'description']; track item.id) {
+    @if (investments().length > 0) {
+      <div class="investments-list">
+        @for (item of investments() | investmentSearchFilter: searchTerm() : ['title', 'description']; track item.id) {
 
-        <div class="investment-item" (click)="onClickSelectItem(item)" [class.selected]="selectedIds().has(item.id)">
+          <div class="investment-item" (click)="onClickSelectItem(item)" [class.selected]="selectedIds().has(item.id)">
 
-          <div class="item-left">
-            <div class="item-top">
-              <strong>{{ item.title }}</strong>
-              <span class="badge"
-                    [class.badge--annual]="item.periodType === 'year'"
-                    [class.badge--monthly]="item.periodType === 'month'">
+            <div class="item-left">
+              <div class="item-top">
+                <strong>{{ item.title }}</strong>
+                <span class="badge"
+                      [class.badge--annual]="item.periodType === 'year'"
+                      [class.badge--monthly]="item.periodType === 'month'">
             {{ item.periodType === 'year' ? 'Annual' : 'Monthly' }}
           </span>
+              </div>
+              <p>{{ item.description }}</p>
             </div>
-            <p>{{ item.description }}</p>
-          </div>
 
-          <div class="item-right">
-            <span class="item-date">{{ item.createdAt | date:'MMM d' }}</span>
-            <span class="item-arrow">&rsaquo;</span>
-          </div>
+            <div class="item-right">
+              <span class="item-date">{{ item.createdAt | date:'MMM d' }}</span>
+              <span class="item-arrow">&rsaquo;</span>
+            </div>
 
-        </div>
-      }
+          </div>
+        }
 
         <button
           type="button"
@@ -47,7 +48,13 @@
           [disabled]="toastService.isVisible()"> COMPARE
         </button>
 
-    </div>
+      </div>
+    } @else {
+      <div class="empty-state">
+        <h3>No investments found</h3>
+        <p>To get started, calculate an investment and click <strong>Save</strong> at the bottom of the table.</p>
+      </div>
+    }
 
   </div>
 </div>
