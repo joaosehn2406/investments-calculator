@@ -22,6 +22,7 @@ export class InvestmentTableComponent {
   readonly data = input.required<InvestmentModel[]>();
   readonly period = input.required<PeriodType>();
   readonly currency = input.required<CurrencyType>()
+  readonly comparisonData = input<LocalStorageModel[]>()
 
   readonly deleteAllData = output<void>()
 

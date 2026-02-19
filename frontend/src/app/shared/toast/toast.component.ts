@@ -17,9 +17,12 @@ export class ToastComponent {
     this.toastService.toast$.subscribe(toast => {
       this.message.set(toast.message);
       this.type.set(toast.type);
+      this.toastService.isVisible.set(true)
 
       setTimeout(() => {
         this.message.set('');
+
+        this.toastService.isVisible.set(false)
       }, 3000);
     });
   }

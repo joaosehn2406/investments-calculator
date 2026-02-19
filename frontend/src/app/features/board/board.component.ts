@@ -1,4 +1,4 @@
-import {Component, inject, output, signal} from '@angular/core';
+import {Component, inject, output, signal, WritableSignal} from '@angular/core';
 import {BoardModel, CURRENCIES, CurrencyType} from '../../shared/model/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
@@ -18,6 +18,7 @@ import {ModalComponent} from './modal/modal.component';
 })
 export class BoardComponent {
   calculate = output<BoardModel>();
+  comparableItems = output<WritableSignal<Set<string>>>();
 
   showModal = signal(false);
 
@@ -65,5 +66,9 @@ export class BoardComponent {
 
   closeModal() {
     this.showModal.set(false);
+  }
+
+  onReceiveFromModal(selectedIds: WritableSignal<Set<string>>) {
+    this.comparableItems.emit(selectedIds)
   }
 }

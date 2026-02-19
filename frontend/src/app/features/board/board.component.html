@@ -108,5 +108,7 @@
 </section>
 
 @if (showModal()) {
-  <app-modal [investments]="savedInvestments()" (closeModal)="closeModal()"/>
+  <app-modal [investments]="savedInvestments()"
+             (closeModal)="closeModal()"
+             (comparableItems)="onReceiveFromModal($event)"/>
 }

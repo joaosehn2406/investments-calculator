@@ -40,11 +40,13 @@
         </div>
       }
 
-      @if (selectedIds().size === 2) {
-        <button type="button" class="compare-button">
-          COMPARE
+        <button
+          type="button"
+          class="compare-button"
+          (click)="onClickCompare()"
+          [disabled]="toastService.isVisible()"> COMPARE
         </button>
-      }
+
     </div>
 
   </div>

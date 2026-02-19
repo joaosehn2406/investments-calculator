@@ -18,18 +18,18 @@
     </tr>
     </thead>
 
-    <tbody>
-      @for (d of data(); track d.period) {
-        <tr>
-          <td>{{ d.period }}</td>
-          <td>{{ d.investmentValue | currency:currency():'symbol':'1.2-2' }}</td>
-          <td>{{ d.interestYear     | currency:currency(): 'symbol':'1.2-2' }}</td>
-          <td>{{ d.totalInterest    | currency:currency(): 'symbol':'1.2-2' }}</td>
-          <td>{{ d.investedCapital  | currency:currency(): 'symbol':'1.2-2' }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
+      <tbody>
+        @for (d of data(); track d.period) {
+          <tr>
+            <td>{{ d.period }}</td>
+            <td>{{ d.investmentValue | currency:currency():'symbol':'1.2-2' }}</td>
+            <td>{{ d.interestYear     | currency:currency(): 'symbol':'1.2-2' }}</td>
+            <td>{{ d.totalInterest    | currency:currency(): 'symbol':'1.2-2' }}</td>
+            <td>{{ d.investedCapital  | currency:currency(): 'symbol':'1.2-2' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
 
   @if (showInputField()) {
     <div class="input-fields" [formGroup]="form">

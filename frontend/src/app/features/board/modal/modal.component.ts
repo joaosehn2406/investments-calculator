@@ -1,8 +1,9 @@
-import {Component, inject, input, output, signal} from '@angular/core';
+import {Component, inject, input, output, signal, WritableSignal} from '@angular/core';
 import {LocalStorageModel} from '../../../shared/model/localStorage.model';
 import {SearchFilterPipe} from './search-filter.pipe';
 import {DatePipe} from '@angular/common';
 import {ToastService} from '../../../core/services/toast.service';
+import {LocalStorageService} from '../../../core/services/localStorage.service';
 
 @Component({
   selector: 'app-modal',
@@ -16,15 +17,17 @@ import {ToastService} from '../../../core/services/toast.service';
 export class ModalComponent {
   investments = input<LocalStorageModel[]>([]);
 
-  closeModal = output<void>()
+  closeModal = output<void>();
+  comparableItems = output<WritableSignal<Set<string>>>();
 
-  searchTerm = signal('')
-  selectedIds = signal<Set<string>>(new Set<string>())
+  searchTerm = signal('');
+  selectedIds = signal<Set<string>>(new Set<string>());
 
-  private toastService = inject(ToastService);
+  protected toastService = inject(ToastService);
+  private localStorageService = inject(LocalStorageService);
 
   onCloseModal() {
-    this.closeModal.emit()
+    this.closeModal.emit();
   }
 
   onClickSelectItem(item: LocalStorageModel) {
@@ -41,7 +44,16 @@ export class ModalComponent {
     this.selectedIds.set(new Set<string>(current))
   }
 
-  validateInvestmentType() {
+  onClickCompare() {
+    if(this.toastService.isVisible()) return
 
+    if (this.localStorageService.validateInvestmentType(this.selectedIds)) {
+      this.toastService.show("These investments are comparable! ");
+      this.comparableItems.emit(this.selectedIds);
+
+      this.onCloseModal()
+    } else {
+      this.toastService.show("Please select 2 investments with the same type!", 'error');
+    }
   }
 }

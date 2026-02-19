@@ -1,13 +1,13 @@
 <app-header/>
 
 <main>
-  <app-board (calculate)="onCalculate($event)"/>
+  <app-board (calculate)="onCalculate($event)" (comparableItems)="$event()"/>
 
   @if (!result().length) {
     <h3>Please enter some values and press "Calculate"</h3>
   } @else {
     <app-investment-table [data]="result()" (deleteAllData)="onDeleteAllData()" [period]="selectedPeriod()"
-                          [currency]="selectedCurrency()"/>
+                          [currency]="selectedCurrency()" [comparisonData]="selectedForComparison()"/>
   }
 </main>
 
