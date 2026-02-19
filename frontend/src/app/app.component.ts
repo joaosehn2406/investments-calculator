@@ -36,6 +36,7 @@ export class AppComponent {
     this.result.set(this.calculationService.calculate(data));
     this.selectedPeriod.set(data.period);
     this.selectedCurrency.set(data.currency)
+    this.selectedForComparison.set([])
   }
 
   onDeleteAllData() {

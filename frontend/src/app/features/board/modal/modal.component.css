@@ -3,7 +3,7 @@
   inset: 0;
   z-index: 100;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -191,4 +191,26 @@
 
 .empty-state strong {
   color: #efefef;
+}
+
+.compare-button {
+  width: 100%;
+  padding: 7px;
+  margin-top: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #7CFFB2;
+  color: #0B2F1B;
+  letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.compare-button:hover {
+  background: #9af4c1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }

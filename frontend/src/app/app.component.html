@@ -1,10 +1,12 @@
 <app-header/>
 
 <main>
-  <app-board (calculate)="onCalculate($event)" (comparableItems)="$event()"/>
+  <app-board (calculate)="onCalculate($event)" (comparableItems)="onHandleComparison($event)"/>
 
-  @if (!result().length) {
+  @if (!result().length && selectedForComparison().length !== 2) {
     <h3>Please enter some values and press "Calculate"</h3>
+  } @else if (selectedForComparison().length === 2) {
+    <h1>TESTE</h1>
   } @else {
     <app-investment-table [data]="result()" (deleteAllData)="onDeleteAllData()" [period]="selectedPeriod()"
                           [currency]="selectedCurrency()" [comparisonData]="selectedForComparison()"/>

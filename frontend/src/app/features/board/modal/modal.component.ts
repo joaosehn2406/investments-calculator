@@ -50,7 +50,6 @@ export class ModalComponent {
     if (this.localStorageService.validateInvestmentType(this.selectedIds)) {
       this.toastService.show("These investments are comparable! ");
       this.comparableItems.emit(this.selectedIds);
-
       this.onCloseModal()
     } else {
       this.toastService.show("Please select 2 investments with the same type!", 'error');
