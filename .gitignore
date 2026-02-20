@@ -38,6 +38,8 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-# .NET (futuro)
+# .NET
 backend/**/bin/
 backend/**/obj/
+backend/**/*.user
+backend/**/.vs/
