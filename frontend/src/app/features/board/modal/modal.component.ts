@@ -3,7 +3,7 @@ import {LocalStorageModel} from '../../../shared/model/localStorage.model';
 import {SearchFilterPipe} from './search-filter.pipe';
 import {DatePipe} from '@angular/common';
 import {ToastService} from '../../../core/services/toast.service';
-import {LocalStorageService} from '../../../core/services/localStorage.service';
+import {InvestmentService} from '../../../core/services/investment.service';
 
 @Component({
   selector: 'app-modal',
@@ -24,7 +24,7 @@ export class ModalComponent {
   selectedIds = signal<Set<string>>(new Set<string>());
 
   protected toastService = inject(ToastService);
-  private localStorageService = inject(LocalStorageService);
+  private investmentService = inject(InvestmentService);
 
   onCloseModal() {
     this.closeModal.emit();
@@ -33,7 +33,7 @@ export class ModalComponent {
   onClickSelectItem(item: LocalStorageModel) {
     const current = this.selectedIds();
 
-    if(current.has(item.id)) {
+    if (current.has(item.id)) {
       current.delete(item.id);
     } else if (current.size < 2) {
       current.add(item.id);
@@ -45,9 +45,9 @@ export class ModalComponent {
   }
 
   onClickCompare() {
-    if(this.toastService.isVisible()) return
+    if (this.toastService.isVisible()) return
 
-    if (this.localStorageService.validateInvestmentType(this.selectedIds)) {
+    if (this.investmentService.validateInvestmentType(this.selectedIds)) {
       this.toastService.show("These investments are comparable! ");
       this.comparableItems.emit(this.selectedIds);
       this.onCloseModal()
