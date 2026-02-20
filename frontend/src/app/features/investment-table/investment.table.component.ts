@@ -21,8 +21,9 @@ import {CurrencyType, PeriodType} from '../../shared/model/board.model';
 export class InvestmentTableComponent {
   readonly data = input.required<InvestmentModel[]>();
   readonly period = input.required<PeriodType>();
-  readonly currency = input.required<CurrencyType>()
-  readonly comparisonData = input<LocalStorageModel[]>()
+  readonly currency = input.required<CurrencyType>();
+  readonly comparisonData = input<LocalStorageModel[]>();
+  readonly title = input<string>('');
 
   readonly deleteAllData = output<void>()
 

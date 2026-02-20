@@ -159,3 +159,11 @@
   opacity: 0.55;
   pointer-events: none;
 }
+
+.table-title {
+  display: flex;
+  justify-content: center;
+  padding-top: 32px;
+  color: #7CFFB2;
+  letter-spacing: 1px;
+}

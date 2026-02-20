@@ -9,7 +9,8 @@
     <div class="comparison-wrapper">
       @for (data of selectedForComparison(); track data.id) {
         <app-investment-table [data]="data.results" [period]="data.results[0].investmentType"
-                              [currency]="data.results[0].currency" [comparisonData]="selectedForComparison()"/>
+                              [currency]="data.results[0].currency" [comparisonData]="selectedForComparison()"
+                              [title]="data.title!"/>
       }
     </div>
   } @else {
