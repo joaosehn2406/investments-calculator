@@ -29,7 +29,8 @@ export class CalculationService {
         interestYear: interestPeriod,
         investmentValue: balance,
         totalInterest,
-        investmentType: inputs.period
+        investmentType: inputs.period,
+        currency: inputs.currency
       });
     }
 

@@ -46,7 +46,7 @@ export class LocalStorageService {
 
     if (selectedItems.length === 2) {
       const [item1, item2] = selectedItems;
-      return item1.periodType === item2.periodType;
+      return item1.results[0].investmentType === item2.results[0].investmentType;
     }
 
     return false;

@@ -25,9 +25,9 @@
               <div class="item-top">
                 <strong>{{ item.title }}</strong>
                 <span class="badge"
-                      [class.badge--annual]="item.periodType === 'year'"
-                      [class.badge--monthly]="item.periodType === 'month'">
-            {{ item.periodType === 'year' ? 'Annual' : 'Monthly' }}
+                      [class.badge--annual]="item.results[0].investmentType === 'year'"
+                      [class.badge--monthly]="item.results[0].investmentType === 'month'">
+            {{ item.results[0].investmentType === 'year' ? 'Annual' : 'Monthly' }}
           </span>
               </div>
               <p>{{ item.description }}</p>

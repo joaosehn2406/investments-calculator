@@ -1,4 +1,4 @@
-import {PeriodType} from './board.model';
+import {CurrencyType, PeriodType} from './board.model';
 
 export interface InvestmentModel {
   period: number,
@@ -6,5 +6,6 @@ export interface InvestmentModel {
   interestYear: number,
   totalInterest: number,
   investedCapital: number,
-  investmentType: PeriodType
+  investmentType: PeriodType,
+  currency: CurrencyType
 }

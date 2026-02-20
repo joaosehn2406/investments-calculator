@@ -18,18 +18,18 @@
     </tr>
     </thead>
 
-      <tbody>
-        @for (d of data(); track d.period) {
-          <tr>
-            <td>{{ d.period }}</td>
-            <td>{{ d.investmentValue | currency:currency():'symbol':'1.2-2' }}</td>
-            <td>{{ d.interestYear     | currency:currency(): 'symbol':'1.2-2' }}</td>
-            <td>{{ d.totalInterest    | currency:currency(): 'symbol':'1.2-2' }}</td>
-            <td>{{ d.investedCapital  | currency:currency(): 'symbol':'1.2-2' }}</td>
-          </tr>
-        }
-      </tbody>
-    </table>
+    <tbody>
+      @for (d of data(); track d.period) {
+        <tr>
+          <td>{{ d.period }}</td>
+          <td>{{ d.investmentValue | currency:currency():'symbol':'1.2-2' }}</td>
+          <td>{{ d.interestYear     | currency:currency(): 'symbol':'1.2-2' }}</td>
+          <td>{{ d.totalInterest    | currency:currency(): 'symbol':'1.2-2' }}</td>
+          <td>{{ d.investedCapital  | currency:currency(): 'symbol':'1.2-2' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
 
   @if (showInputField()) {
     <div class="input-fields" [formGroup]="form">
@@ -63,18 +63,20 @@
     </div>
   }
 
-  <div class="actions">
-    <button (click)="onPrimaryAction()" class="actions-bt actions-bt--saveInvestment"
-            [disabled]="(form.invalid && showInputField()) || isResultSaved()">
-      {{ isResultSaved() ? 'Saved ✅' : showInputField() ? 'Confirm' : 'Save investment' }}
-    </button>
+  @if (comparisonData()?.length === 0) {
+    <div class="actions">
+      <button (click)="onPrimaryAction()" class="actions-bt actions-bt--saveInvestment"
+              [disabled]="(form.invalid && showInputField()) || isResultSaved()">
+        {{ isResultSaved() ? 'Saved ✅' : showInputField() ? 'Confirm' : 'Save investment' }}
+      </button>
 
-    <button (click)="exportToExcel()" class="actions-bt">
-      Export to Excel
-    </button>
+      <button (click)="exportToExcel()" class="actions-bt">
+        Export to Excel
+      </button>
 
-    <button (click)="deleteInvestments()" class="actions-bt actions-bt--delete">
-      Delete saved investments
-    </button>
-  </div>
+      <button (click)="deleteInvestments()" class="actions-bt actions-bt--delete">
+        Delete saved investments
+      </button>
+    </div>
+  }
 </section>

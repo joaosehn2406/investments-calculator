@@ -6,7 +6,12 @@
   @if (!result().length && selectedForComparison().length !== 2) {
     <h3>Please enter some values and press "Calculate"</h3>
   } @else if (selectedForComparison().length === 2) {
-    <h1>TESTE</h1>
+    <div class="comparison-wrapper">
+      @for (data of selectedForComparison(); track data.id) {
+        <app-investment-table [data]="data.results" [period]="data.results[0].investmentType"
+                              [currency]="data.results[0].currency" [comparisonData]="selectedForComparison()"/>
+      }
+    </div>
   } @else {
     <app-investment-table [data]="result()" (deleteAllData)="onDeleteAllData()" [period]="selectedPeriod()"
                           [currency]="selectedCurrency()" [comparisonData]="selectedForComparison()"/>

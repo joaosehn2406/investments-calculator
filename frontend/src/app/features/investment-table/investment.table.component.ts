@@ -98,7 +98,6 @@ export class InvestmentTableComponent {
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
       title: investmentTitle,
-      periodType: this.period(),
       description: investmentDescription,
       results: this.data()
     }
