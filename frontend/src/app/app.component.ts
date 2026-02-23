@@ -31,17 +31,20 @@ export class AppComponent {
   selectedPeriod = signal<PeriodType>('year')
   selectedCurrency = signal<CurrencyType>('USD')
   selectedForComparison = signal<LocalStorageModel[]>([]);
+  shouldCleanInputs = signal<boolean>(false)
 
   onCalculate(data: BoardModel) {
     this.result.set(this.calculationService.calculate(data));
     this.selectedPeriod.set(data.period);
     this.selectedCurrency.set(data.currency)
     this.selectedForComparison.set([])
+    this.shouldCleanInputs.set(false)
   }
 
   onDeleteAllData() {
     this.result.set([])
     this.selectedForComparison.set([])
+    this.shouldCleanInputs.set(true)
   }
 
   onHandleComparison(ids: WritableSignal<Set<string>>) {

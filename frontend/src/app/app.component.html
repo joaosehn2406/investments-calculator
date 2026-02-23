@@ -1,7 +1,7 @@
 <app-header/>
 
 <main>
-  <app-board (calculate)="onCalculate($event)" (comparableItems)="onHandleComparison($event)"/>
+  <app-board (calculate)="onCalculate($event)" (comparableItems)="onHandleComparison($event)" [shouldCleanInputs]="shouldCleanInputs()"/>
 
   @if (!result().length && selectedForComparison().length === 0) {
     <h3>Please enter some values and press "Calculate"</h3>

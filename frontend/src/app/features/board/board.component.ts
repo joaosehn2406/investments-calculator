@@ -1,4 +1,4 @@
-import {Component, inject, output, signal, WritableSignal} from '@angular/core';
+import {Component, effect, inject, input, output, signal, WritableSignal} from '@angular/core';
 import {BoardModel, CURRENCIES, CurrencyType} from '../../shared/model/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
@@ -20,6 +20,8 @@ export class BoardComponent {
   calculate = output<BoardModel>();
   comparableItems = output<WritableSignal<Set<string>>>();
 
+  shouldCleanInputs = input<boolean>()
+
   showModal = signal(false);
 
   savedInvestments = signal<LocalStorageModel[]>([]);
@@ -29,6 +31,21 @@ export class BoardComponent {
   protected localStorageService = inject(LocalStorageService)
 
   private fb = inject(FormBuilder);
+
+  constructor() {
+    effect(() => {
+      if (this.shouldCleanInputs()) {
+        this.form.reset({
+          initialInvestment: null,
+          financialContribution: null,
+          expectedReturn: null,
+          duration: null,
+          period: 'year',
+          currency: this.currencyTypes[0]
+        });
+      }
+    });
+  }
 
   form = this.fb.group({
     initialInvestment: [null as number | null, [
