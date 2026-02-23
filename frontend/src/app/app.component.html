@@ -10,6 +10,7 @@
       @for (data of selectedForComparison(); track data.id) {
         <app-investment-table [data]="data.results" [period]="data.results[0].investmentType"
                               [currency]="data.results[0].currency" [comparisonData]="selectedForComparison()"
+                              (deleteAllData)="onDeleteAllData()"
                               [title]="data.title!"/>
       }
     </div>
