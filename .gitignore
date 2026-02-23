@@ -1,4 +1,4 @@
-# Compiled output
+    # Compiled output
 frontend/dist/
 frontend/tmp/
 frontend/out-tsc/
@@ -6,6 +6,7 @@ frontend/bazel-out/
 
 # Node
 frontend/node_modules/
+node_modules/
 
 # Angular cache
 .angular/
