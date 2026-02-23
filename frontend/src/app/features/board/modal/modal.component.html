@@ -41,12 +41,23 @@
           </div>
         }
 
-        <button
-          type="button"
-          class="compare-button"
-          (click)="onClickCompare()"
-          [disabled]="toastService.isVisible()"> COMPARE
-        </button>
+
+        <div class="button-actions">
+          @if (selectedIds().size === 1) {
+            <button
+              type="button"
+              class="view-investment-button"
+              (click)="onClickVisualize()">VISUALIZE
+            </button>
+          }
+
+          <button
+            type="button"
+            class="compare-button"
+            (click)="onClickCompare()"
+            [disabled]="toastService.isVisible()">COMPARE
+          </button>
+        </div>
 
       </div>
     } @else {

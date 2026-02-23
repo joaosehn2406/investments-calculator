@@ -41,6 +41,7 @@ export class AppComponent {
 
   onDeleteAllData() {
     this.result.set([])
+    this.selectedForComparison.set([])
   }
 
   onHandleComparison(ids: WritableSignal<Set<string>>) {
@@ -49,5 +50,7 @@ export class AppComponent {
     const dataFiltered = data.filter(item => ids().has(item.id))
 
     this.selectedForComparison.set(dataFiltered)
+
+    debugger
   }
 }

@@ -55,4 +55,9 @@ export class ModalComponent {
       this.toastService.show("Please select 2 investments with the same type!", 'error');
     }
   }
+
+  onClickVisualize() {
+    this.comparableItems.emit(this.selectedIds);
+    this.onCloseModal()
+  }
 }

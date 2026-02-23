@@ -68,20 +68,23 @@
     </div>
   }
 
-  @if (comparisonData()?.length === 0) {
-    <div class="actions">
+  <div class="actions">
+
+    @if (comparisonData()?.length === 0) {
       <button (click)="onPrimaryAction()" class="actions-bt actions-bt--saveInvestment"
               [disabled]="(form.invalid && showInputField()) || isResultSaved()">
         {{ isResultSaved() ? 'Saved ✅' : showInputField() ? 'Confirm' : 'Save investment' }}
       </button>
+    }
 
+    @if ((comparisonData()?.length ?? 0) <= 1) {
       <button (click)="exportToExcel()" class="actions-bt">
         Export to Excel
       </button>
+    }
 
-      <button (click)="deleteInvestments()" class="actions-bt actions-bt--delete">
-        Delete saved investments
-      </button>
-    </div>
-  }
+    <button (click)="deleteInvestments()" class="actions-bt actions-bt--delete">
+      Delete saved investments
+    </button>
+  </div>
 </section>

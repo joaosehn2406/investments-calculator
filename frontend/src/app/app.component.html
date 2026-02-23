@@ -3,9 +3,9 @@
 <main>
   <app-board (calculate)="onCalculate($event)" (comparableItems)="onHandleComparison($event)"/>
 
-  @if (!result().length && selectedForComparison().length !== 2) {
+  @if (!result().length && selectedForComparison().length === 0) {
     <h3>Please enter some values and press "Calculate"</h3>
-  } @else if (selectedForComparison().length === 2) {
+  } @else if (selectedForComparison().length === 1 || selectedForComparison().length === 2) {
     <div class="comparison-wrapper">
       @for (data of selectedForComparison(); track data.id) {
         <app-investment-table [data]="data.results" [period]="data.results[0].investmentType"
