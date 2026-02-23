@@ -1,39 +1,19 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BoardModel} from '../../shared/model/board.model';
 import {InvestmentModel} from '../../shared/model/investment.model';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+
+interface CalculationResponse {
+  results: InvestmentModel[]
+}
 
 @Injectable({providedIn: 'root'})
 export class CalculationService {
+  private http = inject(HttpClient)
+  private apiUrl = 'http://localhost:5000/api/investments/calculate'
 
-  calculate(inputs: BoardModel): InvestmentModel[] {
-    const results: InvestmentModel[] = [];
-    const isMonthly = inputs.period === 'month';
-
-    const periodsTotal = isMonthly ? inputs.duration * 12 : inputs.duration;
-    const rate = isMonthly ? (inputs.expectedReturn / 100) / 12 : inputs.expectedReturn / 100;
-    const contribution = isMonthly ? inputs.financialContribution / 12 : inputs.financialContribution;
-
-    let balance = inputs.initialInvestment;
-    let totalInvested = inputs.initialInvestment;
-    let totalInterest = 0;
-
-    for (let period = 1; period <= periodsTotal; period++) {
-      const interestPeriod = balance * rate;
-      balance += interestPeriod + contribution;
-      totalInvested += contribution;
-      totalInterest = balance - totalInvested;
-
-      results.push({
-        period,
-        investedCapital: totalInvested,
-        interestYear: interestPeriod,
-        investmentValue: balance,
-        totalInterest,
-        investmentType: inputs.period,
-        currency: inputs.currency
-      });
-    }
-
-    return results;
+  calculate(inputs: BoardModel): Observable<CalculationResponse> {
+    return this.http.post<CalculationResponse>(this.apiUrl, inputs)
   }
 }

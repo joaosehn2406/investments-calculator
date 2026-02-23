@@ -34,11 +34,13 @@ export class AppComponent {
   shouldCleanInputs = signal<boolean>(false)
 
   onCalculate(data: BoardModel) {
-    this.result.set(this.calculationService.calculate(data));
-    this.selectedPeriod.set(data.period);
-    this.selectedCurrency.set(data.currency)
-    this.selectedForComparison.set([])
-    this.shouldCleanInputs.set(false)
+    this.calculationService.calculate(data).subscribe(response => {
+      this.result.set(response.results);
+      this.selectedPeriod.set(data.period);
+      this.selectedCurrency.set(data.currency);
+      this.selectedForComparison.set([]);
+      this.shouldCleanInputs.set(false);
+    });
   }
 
   onDeleteAllData() {
