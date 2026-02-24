@@ -28,11 +28,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
   app.MapOpenApi();
+  app.UseHttpsRedirection();
 }
 
-app.UseHttpsRedirection();
 app.UseCors("AllowAngular");
-app.MapControllers();
 app.UseAuthorization();
+app.MapControllers();
 
 app.Run();

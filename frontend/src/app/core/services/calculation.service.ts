@@ -11,7 +11,7 @@ interface CalculationResponse {
 @Injectable({providedIn: 'root'})
 export class CalculationService {
   private http = inject(HttpClient)
-  private apiUrl = 'http://localhost:5000/api/investments/calculate'
+  private apiUrl = 'http://localhost:5096/api/investments/calculate'
 
   calculate(inputs: BoardModel): Observable<CalculationResponse> {
     return this.http.post<CalculationResponse>(this.apiUrl, inputs)

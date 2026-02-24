@@ -6,7 +6,7 @@ public class InvestmentService
 {
   public CalculationResponse Calculate(CalculationRequest request)
   {
-    var isMonthly = string.Equals(request.Period, "monthly", StringComparison.OrdinalIgnoreCase);
+    var isMonthly = string.Equals(request.Period, "month", StringComparison.OrdinalIgnoreCase);
 
     var periodsTotal = isMonthly ? request.Duration * 12 : request.Duration;
     var rate = isMonthly
