@@ -21,6 +21,7 @@ export class BoardComponent {
   comparableItems = output<WritableSignal<Set<string>>>();
 
   shouldCleanInputs = input<boolean>()
+  isLoading = input<boolean>(false)
 
   showModal = signal(false);
 

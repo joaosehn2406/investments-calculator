@@ -9,6 +9,8 @@ import {FooterComponent} from './features/footer/footer.component';
 import {ToastComponent} from './shared/toast/toast.component';
 import {LocalStorageService} from './core/services/localStorage.service';
 import {LocalStorageModel} from './shared/model/localStorage.model';
+import {finalize} from 'rxjs';
+import {ToastService} from './core/services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -26,21 +28,34 @@ import {LocalStorageModel} from './shared/model/localStorage.model';
 export class AppComponent {
   private calculationService = inject(CalculationService)
   private localStorageService = inject(LocalStorageService)
+  private toastService = inject(ToastService)
 
   result = signal<InvestmentModel[]>([]);
   selectedPeriod = signal<PeriodType>('year')
   selectedCurrency = signal<CurrencyType>('USD')
   selectedForComparison = signal<LocalStorageModel[]>([]);
   shouldCleanInputs = signal<boolean>(false)
+  isLoading = signal<boolean>(false)
 
   onCalculate(data: BoardModel) {
-    this.calculationService.calculate(data).subscribe(response => {
-      this.result.set(response.results);
-      this.selectedPeriod.set(data.period);
-      this.selectedCurrency.set(data.currency);
-      this.selectedForComparison.set([]);
-      this.shouldCleanInputs.set(false);
-    });
+    this.isLoading.set(true)
+
+    this.calculationService.calculate(data)
+      .pipe(
+        finalize(() => this.isLoading.set(false))
+      )
+      .subscribe({
+        next: (response) => {
+          this.result.set(response.results);
+          this.selectedPeriod.set(data.period);
+          this.selectedCurrency.set(data.currency);
+          this.selectedForComparison.set([]);
+          this.shouldCleanInputs.set(false);
+        },
+        error: () => {
+          this.toastService.show('Calculation failed', 'error')
+        }
+      });
   }
 
   onDeleteAllData() {
