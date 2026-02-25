@@ -16,6 +16,9 @@ public class InvestmentController : ControllerBase
   [HttpPost("calculate")]
   public IActionResult Calculate([FromBody] CalculationRequest request)
   {
+    if (!ModelState.IsValid)
+      return BadRequest(ModelState);
+
     var response = _investmentService.Calculate(request);
     return Ok(response);
   }

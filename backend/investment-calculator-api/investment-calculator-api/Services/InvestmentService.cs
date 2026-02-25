@@ -23,11 +23,10 @@ public class InvestmentService
 
     for (var period = 1; period <= periodsTotal; period++)
     {
-      decimal totalInterest = 0;
       var interestPeriod = balance * rate;
       balance += interestPeriod + contribution;
       totalInvestment += contribution;
-      totalInterest = balance - totalInvestment;
+      var totalInterest = balance - totalInvestment;
 
       results.Add(new InvestmentPeriodResult(
         Period: period,

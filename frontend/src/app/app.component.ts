@@ -52,8 +52,12 @@ export class AppComponent {
           this.selectedForComparison.set([]);
           this.shouldCleanInputs.set(false);
         },
-        error: () => {
-          this.toastService.show('Calculation failed', 'error')
+        error: (err) => {
+          const message = err?.error?.errors
+            ? Object.values(err.error.errors).flat().join(', ')
+            : 'Calculation failed';
+
+          this.toastService.show(message, 'error')
         }
       });
   }
