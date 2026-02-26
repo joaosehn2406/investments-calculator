@@ -22,13 +22,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
   )
 );
 
+builder.Services.AddControllers()
+  .AddJsonOptions(options =>
+  {
+    options.JsonSerializerOptions.PropertyNamingPolicy =
+      System.Text.Json.JsonNamingPolicy.CamelCase;
+  });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
   app.MapOpenApi();
-  app.UseHttpsRedirection();
 }
 
 app.UseCors("AllowAngular");

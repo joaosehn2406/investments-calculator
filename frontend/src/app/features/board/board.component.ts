@@ -72,8 +72,6 @@ export class BoardComponent {
   });
 
   onCalculate() {
-    if (this.form.invalid) return;
-
     this.calculate.emit(this.form.value as BoardModel);
   }
 

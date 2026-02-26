@@ -6,18 +6,24 @@ public class InvestmentService
 {
   public CalculationResponse Calculate(CalculationRequest request)
   {
+    // Valores já validados pelo controller - seguros para usar .Value
+    var initialInvestment = request.InitialInvestment!.Value;
+    var financialContribution = request.FinancialContribution!.Value;
+    var expectedReturn = request.ExpectedReturn!.Value;
+    var duration = request.Duration!.Value;
+
     var isMonthly = string.Equals(request.Period, "month", StringComparison.OrdinalIgnoreCase);
 
-    var periodsTotal = isMonthly ? request.Duration * 12 : request.Duration;
+    var periodsTotal = isMonthly ? duration * 12 : duration;
     var rate = isMonthly
-      ? request.ExpectedReturn / 100m / 12m
-      : request.ExpectedReturn / 100m;
+      ? expectedReturn / 100m / 12m
+      : expectedReturn / 100m;
     var contribution = isMonthly
-      ? request.FinancialContribution / 12m
-      : request.FinancialContribution;
+      ? financialContribution / 12m
+      : financialContribution;
 
-    var balance = request.InitialInvestment;
-    var totalInvestment = request.InitialInvestment;
+    var balance = initialInvestment;
+    var totalInvestment = initialInvestment;
 
     var results = new List<InvestmentPeriodResult>(periodsTotal);
 
