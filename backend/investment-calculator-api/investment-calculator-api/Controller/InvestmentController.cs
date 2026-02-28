@@ -22,4 +22,14 @@ public class InvestmentController : ControllerBase
     var response = _investmentService.Calculate(request);
     return Ok(response);
   }
+
+  [HttpPost("save")]
+  public async Task<IActionResult> SaveInvestment([FromBody] SaveInvestmentRequest request)
+  {
+    if (!ModelState.IsValid)       
+      return BadRequest(ModelState);
+
+    var id = await _investmentService.Save(request);
+    return Ok(new { id });
+  }
 }

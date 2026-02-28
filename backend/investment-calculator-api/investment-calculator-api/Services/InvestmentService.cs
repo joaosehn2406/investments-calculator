@@ -1,12 +1,46 @@
-﻿using investment_calculator_api.DTO;
+﻿using investment_calculator_api.Data;
+using investment_calculator_api.DTO;
+using investment_calculator_api.Model;
 
 namespace investment_calculator_api.Services;
 
 public class InvestmentService
 {
+  private readonly AppDbContext _db;
+
+  public InvestmentService(AppDbContext db)
+    => _db = db;
+
+  public async Task<Guid> Save(SaveInvestmentRequest request)
+  {
+    var investment = new Investment
+    {
+      Id = Guid.NewGuid(),
+      Title = request.Title,
+      Description = request.Description,
+      Currency = request.Currency,
+      InvestmentType = request.InvestmentType,
+      CalculatedAt = DateTime.UtcNow,
+
+      Results = request.Results.Select(r => new InvestmentResult
+      {
+        Id = Guid.NewGuid(),
+        Period = r.Period,
+        InvestmentValue = r.InvestmentValue,
+        InterestYear = r.InterestYear,
+        TotalInterest = r.TotalInterest,
+        InvestedCapital = r.InvestedCapital
+      }).ToList()
+    };
+
+    _db.Investments.Add(investment);
+    await _db.SaveChangesAsync();
+
+    return investment.Id;
+  }
+
   public CalculationResponse Calculate(CalculationRequest request)
   {
-    // Valores já validados pelo controller - seguros para usar .Value
     var initialInvestment = request.InitialInvestment!.Value;
     var financialContribution = request.FinancialContribution!.Value;
     var expectedReturn = request.ExpectedReturn!.Value;
