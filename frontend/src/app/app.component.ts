@@ -4,13 +4,13 @@ import {InvestmentModel} from './shared/model/investment.model';
 import {HeaderComponent} from './features/header/header.component';
 import {BoardComponent} from './features/board/board.component';
 import {InvestmentTableComponent} from './features/investment-table/investment.table.component';
-import {CalculationService} from './core/services/calculation.service';
 import {FooterComponent} from './features/footer/footer.component';
 import {ToastComponent} from './shared/toast/toast.component';
 import {LocalStorageService} from './core/services/localStorage.service';
 import {LocalStorageModel} from './shared/model/localStorage.model';
 import {finalize} from 'rxjs';
 import {ToastService} from './core/services/toast.service';
+import {InvestmentApiService} from './core/services/invesment.api.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ import {ToastService} from './core/services/toast.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  private calculationService = inject(CalculationService)
+  private investmentApiService = inject(InvestmentApiService)
   private localStorageService = inject(LocalStorageService)
   private toastService = inject(ToastService)
 
@@ -40,7 +40,7 @@ export class AppComponent {
   onCalculate(data: BoardModel) {
     this.isLoading.set(true)
 
-    this.calculationService.calculate(data)
+    this.investmentApiService.calculate(data)
       .pipe(
         finalize(() => this.isLoading.set(false))
       )
