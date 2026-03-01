@@ -7,6 +7,8 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
 import {LocalStorageModel} from '../../shared/model/localStorage.model';
 import {CurrencyType, PeriodType} from '../../shared/model/board.model';
+import {InvestmentApiService} from '../../core/services/invesment.api.service';
+import {SaveInvestmentRequest} from '../../shared/model/save.investment.model';
 
 @Component({
   selector: 'app-investment-table',
@@ -26,8 +28,10 @@ export class InvestmentTableComponent {
   readonly title = input<string>('');
 
   readonly deleteAllData = output<void>()
+  readonly savingLoading = output<boolean>()
 
   private localStorageService = inject(LocalStorageService)
+  private investmentApiService = inject(InvestmentApiService)
   private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
 
@@ -83,10 +87,10 @@ export class InvestmentTableComponent {
       return
     }
 
-    this.saveInfosToLocalStorage()
+    this.saveInvestment()
   }
 
-  private saveInfosToLocalStorage() {
+  private saveInvestment() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.toastService.show('Fill Title and Description accordingly.', 'error');
@@ -95,20 +99,56 @@ export class InvestmentTableComponent {
 
     const {investmentTitle, investmentDescription} = this.form.getRawValue()
 
-    const payload: LocalStorageModel = {
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
-      title: investmentTitle,
-      description: investmentDescription,
-      results: this.data()
+    const apiPayload: SaveInvestmentRequest = {
+      title: investmentTitle!,
+      description: investmentDescription!,
+      currency: this.currency(),
+      investmentType: this.period(),
+      results: this.data().map(r => ({
+        period: r.period,
+        investmentValue: r.investmentValue,
+        interestYear: r.interestYear,
+        totalInterest: r.totalInterest,
+        investedCapital: r.investedCapital
+      }))
     }
 
-    this.localStorageService.add(payload);
+    this.savingLoading.emit(true)
 
-    this.toastService.show('Investment saved! ✅');
-    this.showInputField.set(false);
-    this.isResultSaved.set(true);
-    this.form.reset({investmentTitle: '', investmentDescription: ''});
+    this.investmentApiService.saveInvestment(apiPayload).subscribe({
+      next: (response) => {
+        const localPayload: LocalStorageModel = {
+          id: response.id,
+          createdAt: new Date().toISOString(),
+          title: investmentTitle,
+          description: investmentDescription,
+          results: this.data()
+        }
+        this.localStorageService.add(localPayload);
+
+        this.toastService.show('Investment saved! ✅');
+        this.showInputField.set(false);
+        this.isResultSaved.set(true);
+        this.form.reset({investmentTitle: '', investmentDescription: ''});
+        this.savingLoading.emit(false)
+      },
+      error: () => {
+        const localPayload: LocalStorageModel = {
+          id: crypto.randomUUID(),
+          createdAt: new Date().toISOString(),
+          title: investmentTitle,
+          description: investmentDescription,
+          results: this.data()
+        }
+        this.localStorageService.add(localPayload);
+
+        this.toastService.show('Saved locally (server unavailable)', 'error');
+        this.showInputField.set(false);
+        this.isResultSaved.set(true);
+        this.form.reset({investmentTitle: '', investmentDescription: ''});
+        this.savingLoading.emit(false)
+      }
+    });
   }
 
   deleteInvestments() {

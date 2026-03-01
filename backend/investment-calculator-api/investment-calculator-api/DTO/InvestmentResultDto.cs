@@ -1,6 +1,6 @@
 ﻿namespace investment_calculator_api.DTO;
 
-public record InvestmentResultRequest(
+public record InvestmentResultDto(
   int Period,
   decimal InvestmentValue,
   decimal InterestYear,

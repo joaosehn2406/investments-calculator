@@ -23,7 +23,8 @@
     </div>
   } @else {
     <app-investment-table [data]="result()" (deleteAllData)="onDeleteAllData()" [period]="selectedPeriod()"
-                          [currency]="selectedCurrency()" [comparisonData]="selectedForComparison()"/>
+                          [currency]="selectedCurrency()" [comparisonData]="selectedForComparison()"
+                          (savingLoading)="isLoading.set($event)"/>
   }
 </main>
 

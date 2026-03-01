@@ -7,5 +7,5 @@ public record SaveInvestmentRequest(
   [Required] string Description,
   [Required] string Currency,
   [Required] string InvestmentType,
-  [Required] List<InvestmentResultRequest> Results
+  [Required] List<InvestmentResultDto> Results
 );
