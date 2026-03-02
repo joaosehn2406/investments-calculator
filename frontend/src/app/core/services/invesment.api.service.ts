@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {SaveInvestmentRequest, SaveInvestmentResponse} from '../../shared/model/save.investment.model';
 import {Observable} from 'rxjs';
@@ -21,7 +21,13 @@ export class InvestmentApiService {
     return this.http.post<SaveInvestmentResponse>(`${this.baseUrl}/save`, request)
   }
 
-  getAllInvestments(): Observable<InvestmentSummary[]> {
-    return this.http.get<InvestmentSummary[]>(this.baseUrl)
+  getAllInvestments(search?: string): Observable<InvestmentSummary[]> {
+    let params = new HttpParams()
+
+    if (search?.trim()) {
+      params = params.set('search', search.trim());
+    }
+
+    return this.http.get<InvestmentSummary[]>(this.baseUrl, {params})
   }
 }
