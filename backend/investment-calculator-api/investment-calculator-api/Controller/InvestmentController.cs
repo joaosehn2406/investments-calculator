@@ -34,9 +34,9 @@ public class InvestmentController : ControllerBase
   }
 
   [HttpGet]
-  public async Task<IActionResult> GetAllInvestments()
+  public async Task<IActionResult> GetAllInvestments([FromQuery] string? search)
   {
-    var investments = await _investmentService.GetAllInvestments();
+    var investments = await _investmentService.GetAllInvestments(search);
     return Ok(investments);
   }
 }

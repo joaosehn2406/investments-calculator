@@ -83,8 +83,18 @@ public class InvestmentService
     return new CalculationResponse(results);
   }
 
-  public async Task<List<Investment>> GetAllInvestments()
+  public async Task<List<Investment>> GetAllInvestments(string? search)
   {
-    return await _db.Investments.ToListAsync();
+    var query = _db.Investments.AsQueryable();
+
+    if (!string.IsNullOrWhiteSpace(search))
+    {
+      query = query.Where(investment =>
+        investment.Title.ToLower().Contains(search.ToLower()) ||
+        investment.Description.ToLower().Contains(search.ToLower())
+      );
+    }
+
+    return await query.ToListAsync();
   }
 }
