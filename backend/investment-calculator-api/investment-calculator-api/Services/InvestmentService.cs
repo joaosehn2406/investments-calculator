@@ -1,6 +1,7 @@
 ﻿using investment_calculator_api.Data;
 using investment_calculator_api.DTO;
 using investment_calculator_api.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace investment_calculator_api.Services;
 
@@ -80,5 +81,10 @@ public class InvestmentService
     }
 
     return new CalculationResponse(results);
+  }
+
+  public async Task<List<Investment>> GetAllInvestments()
+  {
+    return await _db.Investments.ToListAsync();
   }
 }

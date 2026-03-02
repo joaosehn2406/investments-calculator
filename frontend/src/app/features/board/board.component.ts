@@ -2,8 +2,10 @@ import {Component, effect, inject, input, output, signal, WritableSignal} from '
 import {BoardModel, CURRENCIES, CurrencyType} from '../../shared/model/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {LocalStorageService} from '../../core/services/localStorage.service';
-import {LocalStorageModel} from '../../shared/model/localStorage.model';
 import {ModalComponent} from './modal/modal.component';
+import {InvestmentApiService} from '../../core/services/invesment.api.service';
+import {ToastService} from '../../core/services/toast.service';
+import {InvestmentSummary} from '../../shared/model/InvestmentSummary';
 
 @Component({
   selector: 'app-board',
@@ -17,6 +19,9 @@ import {ModalComponent} from './modal/modal.component';
   ]
 })
 export class BoardComponent {
+  private investmentApiService = inject(InvestmentApiService)
+  private toastService = inject(ToastService)
+
   calculate = output<BoardModel>();
   comparableItems = output<WritableSignal<Set<string>>>();
 
@@ -25,7 +30,7 @@ export class BoardComponent {
 
   showModal = signal(false);
 
-  savedInvestments = signal<LocalStorageModel[]>([]);
+  savedInvestments = signal<InvestmentSummary[]>([]);
 
   currencyTypes = Object.keys(CURRENCIES) as CurrencyType[]
 
@@ -76,7 +81,15 @@ export class BoardComponent {
   }
 
   openModal() {
-    this.savedInvestments.set(this.localStorageService.list());
+    this.investmentApiService.getAllInvestments().subscribe({
+      next: (investments) => {
+        this.savedInvestments.set(investments)
+        this.showModal.set(true)
+      } ,
+      error: () => {
+        this.toastService.show('Failed to load investments', 'error')
+      }
+    })
     this.showModal.set(true);
   }
 

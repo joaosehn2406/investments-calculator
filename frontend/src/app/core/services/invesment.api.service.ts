@@ -5,8 +5,9 @@ import {SaveInvestmentRequest, SaveInvestmentResponse} from '../../shared/model/
 import {Observable} from 'rxjs';
 import {BoardModel} from '../../shared/model/board.model';
 import {CalculationResponse} from '../../shared/model/calculate.investment.model';
+import {InvestmentSummary} from '../../shared/model/InvestmentSummary';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class InvestmentApiService {
 
   private http = inject(HttpClient)
@@ -18,5 +19,9 @@ export class InvestmentApiService {
 
   saveInvestment(request: SaveInvestmentRequest): Observable<SaveInvestmentResponse> {
     return this.http.post<SaveInvestmentResponse>(`${this.baseUrl}/save`, request)
+  }
+
+  getAllInvestments(): Observable<InvestmentSummary[]> {
+    return this.http.get<InvestmentSummary[]>(this.baseUrl)
   }
 }

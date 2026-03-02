@@ -26,10 +26,17 @@ public class InvestmentController : ControllerBase
   [HttpPost("save")]
   public async Task<IActionResult> SaveInvestment([FromBody] SaveInvestmentRequest request)
   {
-    if (!ModelState.IsValid)       
+    if (!ModelState.IsValid)
       return BadRequest(ModelState);
 
     var id = await _investmentService.Save(request);
     return Ok(new { id });
+  }
+
+  [HttpGet]
+  public async Task<IActionResult> GetAllInvestments()
+  {
+    var investments = await _investmentService.GetAllInvestments();
+    return Ok(investments);
   }
 }

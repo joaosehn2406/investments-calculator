@@ -1,9 +1,9 @@
 import {Component, inject, input, output, signal, WritableSignal} from '@angular/core';
-import {LocalStorageModel} from '../../../shared/model/localStorage.model';
 import {SearchFilterPipe} from './search-filter.pipe';
 import {DatePipe} from '@angular/common';
 import {ToastService} from '../../../core/services/toast.service';
 import {InvestmentService} from '../../../core/services/investment.service';
+import {InvestmentSummary} from '../../../shared/model/InvestmentSummary';
 
 @Component({
   selector: 'app-modal',
@@ -15,7 +15,7 @@ import {InvestmentService} from '../../../core/services/investment.service';
   styleUrl: './modal.component.css',
 })
 export class ModalComponent {
-  investments = input<LocalStorageModel[]>([]);
+  investments = input<InvestmentSummary[]>([]);
 
   closeModal = output<void>();
   comparableItems = output<WritableSignal<Set<string>>>();
@@ -30,7 +30,7 @@ export class ModalComponent {
     this.closeModal.emit();
   }
 
-  onClickSelectItem(item: LocalStorageModel) {
+  onClickSelectItem(item: InvestmentSummary) {
     const current = this.selectedIds();
 
     if (current.has(item.id)) {
