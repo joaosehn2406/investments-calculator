@@ -1,7 +1,6 @@
 import {Component, effect, inject, input, output, signal, WritableSignal} from '@angular/core';
 import {BoardModel, CURRENCIES, CurrencyType} from '../../shared/model/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {LocalStorageService} from '../../core/services/localStorage.service';
 import {ModalComponent} from './modal/modal.component';
 import {InvestmentApiService} from '../../core/services/invesment.api.service';
 import {ToastService} from '../../core/services/toast.service';
@@ -24,6 +23,7 @@ export class BoardComponent {
 
   calculate = output<BoardModel>();
   comparableItems = output<WritableSignal<Set<string>>>();
+  modalLoading = output<boolean>()
 
   shouldCleanInputs = input<boolean>()
   isLoading = input<boolean>(false)
@@ -33,8 +33,6 @@ export class BoardComponent {
   savedInvestments = signal<InvestmentSummary[]>([]);
 
   currencyTypes = Object.keys(CURRENCIES) as CurrencyType[]
-
-  protected localStorageService = inject(LocalStorageService)
 
   private fb = inject(FormBuilder);
 
@@ -81,13 +79,19 @@ export class BoardComponent {
   }
 
   openModal() {
+    this.savedInvestments.set([]);
+    this.showModal.set(true);
+    this.modalLoading.emit(true);
+
     this.investmentApiService.getAllInvestments().subscribe({
       next: (investments) => {
         this.savedInvestments.set(investments)
         this.showModal.set(true)
+        this.modalLoading.emit(false)
       } ,
       error: () => {
         this.toastService.show('Failed to load investments', 'error')
+        this.modalLoading.emit(false)
       }
     })
     this.showModal.set(true);
