@@ -6,7 +6,6 @@ import {BoardComponent} from './features/board/board.component';
 import {InvestmentTableComponent} from './features/investment-table/investment.table.component';
 import {FooterComponent} from './features/footer/footer.component';
 import {ToastComponent} from './shared/toast/toast.component';
-import {LocalStorageService} from './core/services/localStorage.service';
 import {LocalStorageModel} from './shared/model/localStorage.model';
 import {finalize} from 'rxjs';
 import {ToastService} from './core/services/toast.service';
@@ -27,7 +26,6 @@ import {InvestmentApiService} from './core/services/invesment.api.service';
 })
 export class AppComponent {
   private investmentApiService = inject(InvestmentApiService)
-  private localStorageService = inject(LocalStorageService)
   private toastService = inject(ToastService)
 
   result = signal<InvestmentModel[]>([]);
@@ -69,25 +67,22 @@ export class AppComponent {
   }
 
   onHandleComparison(ids: WritableSignal<string[]>) {
-    this.isLoading.set(true)
+    if (ids().length === 1) {
+      this.isLoading.set(true);
 
-    if (ids().length === 1 && ids() != null) {
-      this.investmentApiService.getInvestmentById(ids().at(0))
-        .pipe(
-          finalize(() => this.isLoading.set(false))
-        )
+      this.investmentApiService.getInvestmentById(ids()[0])
+        .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe({
           next: (data) => {
-            this.selectedForComparison.set(data)
+            const mapped = data.results.map(r => ({
+              ...r,
+              investmentType: data.investmentType as PeriodType,
+              currency: data.currency as CurrencyType
+            }));
+            this.result.set(mapped);
           },
           error: () => this.toastService.show('Failed to load', 'error')
-        })
+        });
     }
-
-    const data = this.localStorageService.list();
-
-    const dataFiltered = data.filter(item => ids().has(item.id))
-
-    this.selectedForComparison.set(dataFiltered)
   }
 }
