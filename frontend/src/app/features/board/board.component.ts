@@ -23,6 +23,7 @@ export class BoardComponent {
 
   calculate = output<BoardModel>();
   comparableItems = output<string[]>();
+  visualizeItem = output<string>()
   modalLoading = output<boolean>()
 
   shouldCleanInputs = input<boolean>()
@@ -104,5 +105,9 @@ export class BoardComponent {
   onReceiveFromModal(selectedIds: string[]) {
     this.comparableItems.emit(selectedIds)
     debugger
+  }
+
+  onVisualizeFromModal(id: string) {
+    this.visualizeItem.emit(id)
   }
 }

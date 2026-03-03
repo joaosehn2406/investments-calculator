@@ -98,10 +98,28 @@ public class InvestmentService
     return await query.ToListAsync();
   }
 
-  public async Task<Investment?> GetInvestmentById(Guid id)
+  public async Task<InvestmentDetailsResponse?> GetInvestmentById(Guid id)
   {
-    return await _db.Investments
-      .Include(i => i.Results)
+    var investment = await _db.Investments
+      .Include(i => i.Results.OrderBy(result => result.Period))
       .FirstOrDefaultAsync(i => i.Id == id);
+
+    if (investment is null) return null;
+
+    return new InvestmentDetailsResponse(
+      investment.Id,
+      investment.Title,
+      investment.Description,
+      investment.Currency,
+      investment.InvestmentType,
+      investment.CalculatedAt,
+      investment.Results.Select(result => new InvestmentResultDto(
+        result.Period,
+        result.InvestmentValue,
+        result.InterestYear,
+        result.TotalInterest,
+        result.InvestedCapital
+      )).ToList()
+    );
   }
 }
