@@ -30,4 +30,8 @@ export class InvestmentApiService {
 
     return this.http.get<InvestmentSummary[]>(this.baseUrl, {params})
   }
+
+  getInvestmentById(id: string | undefined): Observable<SaveInvestmentResponse> {
+    return this.http.get<SaveInvestmentResponse>(`${this.baseUrl}/${id}`);
+  }
 }

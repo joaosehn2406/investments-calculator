@@ -68,7 +68,22 @@ export class AppComponent {
     this.shouldCleanInputs.set(true)
   }
 
-  onHandleComparison(ids: WritableSignal<Set<string>>) {
+  onHandleComparison(ids: WritableSignal<string[]>) {
+    this.isLoading.set(true)
+
+    if (ids().length === 1 && ids() != null) {
+      this.investmentApiService.getInvestmentById(ids().at(0))
+        .pipe(
+          finalize(() => this.isLoading.set(false))
+        )
+        .subscribe({
+          next: (data) => {
+            this.selectedForComparison.set(data)
+          },
+          error: () => this.toastService.show('Failed to load', 'error')
+        })
+    }
+
     const data = this.localStorageService.list();
 
     const dataFiltered = data.filter(item => ids().has(item.id))

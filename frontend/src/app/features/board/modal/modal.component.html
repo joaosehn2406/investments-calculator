@@ -25,7 +25,7 @@
         @for (item of getDisplayedInvestments(); track item.id) {
 
           <div class="investment-item" (click)="onClickSelectItem(item)"
-               [class.selected]="selectedIds().has(item.id)">
+               [class.selected]="selectedIds().includes(item.id)">
 
             <div class="item-left">
               <div class="item-top">
@@ -48,7 +48,7 @@
         }
 
         <div class="button-actions">
-          @if (selectedIds().size === 1) {
+          @if (selectedIds().length === 1) {
             <button
               type="button"
               class="view-investment-button"

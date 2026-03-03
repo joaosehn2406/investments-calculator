@@ -22,7 +22,7 @@ export class BoardComponent {
   private toastService = inject(ToastService)
 
   calculate = output<BoardModel>();
-  comparableItems = output<WritableSignal<Set<string>>>();
+  comparableItems = output<WritableSignal<string[]>>();
   modalLoading = output<boolean>()
 
   shouldCleanInputs = input<boolean>()
@@ -101,7 +101,7 @@ export class BoardComponent {
     this.showModal.set(false);
   }
 
-  onReceiveFromModal(selectedIds: WritableSignal<Set<string>>) {
+  onReceiveFromModal(selectedIds: WritableSignal<string[]>) {
     this.comparableItems.emit(selectedIds)
   }
 }
