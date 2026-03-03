@@ -4,7 +4,6 @@ import ExcelJS from 'exceljs';
 import {CurrencyPipe} from '@angular/common';
 import {ToastService} from '../../core/services/toast.service';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {LocalStorageService} from '../../core/services/localStorage.service';
 import {LocalStorageModel} from '../../shared/model/localStorage.model';
 import {CurrencyType, PeriodType} from '../../shared/model/board.model';
 import {InvestmentApiService} from '../../core/services/invesment.api.service';
@@ -30,7 +29,6 @@ export class InvestmentTableComponent {
   readonly deleteAllData = output<void>()
   readonly savingLoading = output<boolean>()
 
-  private localStorageService = inject(LocalStorageService)
   private investmentApiService = inject(InvestmentApiService)
   private toastService = inject(ToastService);
   private fb = inject(FormBuilder);
@@ -116,16 +114,9 @@ export class InvestmentTableComponent {
     this.savingLoading.emit(true)
 
     this.investmentApiService.saveInvestment(apiPayload).subscribe({
-      next: (response) => {
-        const localPayload: LocalStorageModel = {
-          id: response.id,
-          createdAt: new Date().toISOString(),
-          title: investmentTitle,
-          description: investmentDescription,
-          results: this.data()
-        }
-        this.localStorageService.add(localPayload);
-
+      next: () => {
+        new Date().toISOString();
+        this.data();
         this.toastService.show('Investment saved! ✅');
         this.showInputField.set(false);
         this.isResultSaved.set(true);
@@ -133,15 +124,9 @@ export class InvestmentTableComponent {
         this.savingLoading.emit(false)
       },
       error: () => {
-        const localPayload: LocalStorageModel = {
-          id: crypto.randomUUID(),
-          createdAt: new Date().toISOString(),
-          title: investmentTitle,
-          description: investmentDescription,
-          results: this.data()
-        }
-        this.localStorageService.add(localPayload);
-
+        crypto.randomUUID();
+        new Date().toISOString();
+        this.data();
         this.toastService.show('Saved locally (server unavailable)', 'error');
         this.showInputField.set(false);
         this.isResultSaved.set(true);
@@ -149,18 +134,5 @@ export class InvestmentTableComponent {
         this.savingLoading.emit(false)
       }
     });
-  }
-
-  deleteInvestments() {
-    const message = this.localStorageService.delete();
-
-    if (message.includes('nothing')) {
-      this.toastService.show(message, 'error')
-      return
-    }
-
-    this.deleteAllData.emit()
-
-    this.toastService.show(message);
   }
 }
