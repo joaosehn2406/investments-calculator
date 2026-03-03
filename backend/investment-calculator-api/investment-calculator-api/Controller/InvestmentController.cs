@@ -39,4 +39,12 @@ public class InvestmentController : ControllerBase
     var investments = await _investmentService.GetAllInvestments(search);
     return Ok(investments);
   }
+
+  [HttpGet("{id:guid}")]
+  public async Task<IActionResult> GetInvestmentById(Guid id)
+  {
+    var investment = await _investmentService.GetInvestmentById(id);
+    if (investment == null) return NotFound();
+    return Ok(investment);
+  }
 }
