@@ -1,4 +1,4 @@
-import {Component, inject, input, output, signal, WritableSignal} from '@angular/core';
+import {Component, inject, input, output, signal} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {ToastService} from '../../../core/services/toast.service';
 import {InvestmentSummary} from '../../../shared/model/InvestmentSummary';
@@ -16,7 +16,7 @@ export class ModalComponent {
   investments = input<InvestmentSummary[]>([]);
 
   closeModal = output<void>();
-  comparableItems = output<WritableSignal<string[]>>();
+  comparableItems = output<string[]>();
   visualizeItem = output<string>()
 
   searchTerm = signal('');
@@ -90,6 +90,7 @@ export class ModalComponent {
 
   onClickVisualize() {
     this.visualizeItem.emit(<string>this.selectedIds().at(0))
+    debugger
     this.onCloseModal();
   }
 }

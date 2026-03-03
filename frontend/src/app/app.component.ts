@@ -1,4 +1,4 @@
-import {Component, inject, signal, WritableSignal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {BoardModel, CurrencyType, PeriodType} from './shared/model/board.model';
 import {InvestmentModel} from './shared/model/investment.model';
 import {HeaderComponent} from './features/header/header.component';
@@ -66,11 +66,11 @@ export class AppComponent {
     this.shouldCleanInputs.set(true)
   }
 
-  onHandleComparison(ids: WritableSignal<string[]>) {
-    if (ids().length === 1) {
+  onHandleComparison(ids: string[]) {
+    if (ids.length === 1) {
       this.isLoading.set(true);
 
-      this.investmentApiService.getInvestmentById(ids()[0])
+      this.investmentApiService.getInvestmentById(ids[0])
         .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe({
           next: (data) => {

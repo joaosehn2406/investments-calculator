@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, output, signal, WritableSignal} from '@angular/core';
+import {Component, effect, inject, input, output, signal} from '@angular/core';
 import {BoardModel, CURRENCIES, CurrencyType} from '../../shared/model/board.model';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ModalComponent} from './modal/modal.component';
@@ -22,7 +22,7 @@ export class BoardComponent {
   private toastService = inject(ToastService)
 
   calculate = output<BoardModel>();
-  comparableItems = output<WritableSignal<string[]>>();
+  comparableItems = output<string[]>();
   modalLoading = output<boolean>()
 
   shouldCleanInputs = input<boolean>()
@@ -101,7 +101,8 @@ export class BoardComponent {
     this.showModal.set(false);
   }
 
-  onReceiveFromModal(selectedIds: WritableSignal<string[]>) {
+  onReceiveFromModal(selectedIds: string[]) {
     this.comparableItems.emit(selectedIds)
+    debugger
   }
 }
