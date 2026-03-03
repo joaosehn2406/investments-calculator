@@ -122,4 +122,40 @@ public class InvestmentService
       )).ToList()
     );
   }
+
+  public async Task<CompareResult?> CompareInvestments(List<Guid> ids)
+  {
+    var investments = await _db.Investments
+      .Where(i => ids.Contains(i.Id))
+      .Include(i => i.Results.OrderBy(r => r.Period))
+      .ToListAsync();
+
+    if (investments.Count != ids.Count)
+    {
+      return CompareResult.Fail("One or more investments not found");
+    };
+
+    if (investments[0].InvestmentType != investments[1].InvestmentType)
+    {
+      return CompareResult.Fail("Invesments must have the same type to compare");
+    }
+
+    var items = investments.Select(inv => new InvestmentDetailsResponse(
+      inv.Id,
+      inv.Title,
+      inv.Description,
+      inv.Currency,
+      inv.InvestmentType,
+      inv.CalculatedAt,
+      inv.Results.Select(r => new InvestmentResultDto(
+        r.Period,
+        r.InvestmentValue,
+        r.InterestYear,
+        r.TotalInterest,
+        r.InvestedCapital
+      )).ToList()
+    )).ToList();
+
+    return CompareResult.Ok(new CompareInvestmentResponse(items));
+  }
 }

@@ -7,6 +7,7 @@ import {BoardModel} from '../../shared/model/board.model';
 import {CalculationResponse} from '../../shared/model/calculate.investment.model';
 import {InvestmentSummary} from '../../shared/model/InvestmentSummary';
 import {InvestmentResponse} from '../../shared/model/investment.response';
+import {CompareInvestmentResponse} from '../../shared/model/CompareInvestmentResponse';
 
 @Injectable({providedIn: 'root'})
 export class InvestmentApiService {
@@ -34,5 +35,10 @@ export class InvestmentApiService {
 
   getInvestmentById(id: string | undefined): Observable<InvestmentResponse> {
     return this.http.get<InvestmentResponse>(`${this.baseUrl}/${id}`);
+  }
+
+  getComparableInvestments(ids: string[]): Observable<CompareInvestmentResponse> {
+    const params = new HttpParams({fromObject: {ids}})
+    return this.http.get<CompareInvestmentResponse>(`${this.baseUrl}/compare`, {params})
   }
 }

@@ -78,19 +78,12 @@ export class ModalComponent {
 
   onClickCompare() {
     if (this.toastService.isVisible()) return;
-
-    // if (this.investmentService.validateInvestmentType(this.selectedIds)) {
-    //   this.toastService.show("These investments are comparable! ");
-    //   this.comparableItems.emit(this.selectedIds);
-    //   this.onCloseModal();
-    // } else {
-    //   this.toastService.show("Please select 2 investments with the same type!", 'error');
-    // }
+    this.comparableItems.emit(this.selectedIds())
+    this.onCloseModal();
   }
 
   onClickVisualize() {
     this.visualizeItem.emit(<string>this.selectedIds().at(0))
-    debugger
     this.onCloseModal();
   }
 }

@@ -47,4 +47,22 @@ public class InvestmentController : ControllerBase
     if (investment == null) return NotFound();
     return Ok(investment);
   }
+
+  [HttpGet("compare")]
+  public async Task<IActionResult> CompareInvestments([FromQuery] List<Guid> ids)
+  {
+    if (ids.Count != 2)
+    {
+      return BadRequest(new { error = "Exactly 2 Ids are required" });
+    }
+
+    var result = await _investmentService.CompareInvestments(ids);
+
+    if (!result.Success)
+    {
+      return BadRequest(new { error = result.Error });
+    }
+
+    return Ok(result);
+  }
 }

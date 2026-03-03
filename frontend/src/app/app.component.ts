@@ -67,9 +67,9 @@ export class AppComponent {
   }
 
   onHandleComparison(ids: string[]) {
-    if (ids.length === 1) {
-      this.isLoading.set(true);
+    this.isLoading.set(true);
 
+    if (ids.length === 1) {
       this.investmentApiService.getInvestmentById(ids[0])
         .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe({
@@ -80,8 +80,38 @@ export class AppComponent {
               currency: data.currency as CurrencyType
             }));
             this.result.set(mapped);
+            this.selectedForComparison.set([]);
           },
           error: () => this.toastService.show('Failed to load', 'error')
+        });
+    } else if (ids.length === 2) {
+      this.investmentApiService.getComparableInvestments(ids)
+        .pipe(finalize(() => this.isLoading.set(false)))
+        .subscribe({
+          next: (response) => {
+            const mapped: LocalStorageModel[] = response.comparableItems.map(item => ({
+              id: item.id,
+              title: item.title,
+              description: item.description,
+              createdAt: item.calculatedAt,
+              results: item.results.map(r => ({
+                period: r.period,
+                investmentValue: r.investmentValue,
+                interestYear: r.interestYear,
+                totalInterest: r.totalInterest,
+                investedCapital: r.investedCapital,
+                investmentType: item.investmentType as PeriodType,
+                currency: item.currency as CurrencyType
+              }))
+            }));
+
+            this.selectedForComparison.set(mapped);
+            this.result.set([]);
+          },
+          error: (err) => {
+            const message = err?.error?.error ?? 'Failed to compare';
+            this.toastService.show(message, 'error');
+          }
         });
     }
   }

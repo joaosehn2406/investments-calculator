@@ -107,7 +107,7 @@
 @if (showModal()) {
   <app-modal [investments]="savedInvestments()"
              (closeModal)="closeModal()"
-             (comparableItems)="onReceiveFromModal($event)"
+             (comparableItems)="onCompareFromModal($event)"
              (visualizeItem)="onVisualizeFromModal($event)"
   />
 }

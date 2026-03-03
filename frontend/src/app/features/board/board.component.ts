@@ -102,9 +102,8 @@ export class BoardComponent {
     this.showModal.set(false);
   }
 
-  onReceiveFromModal(selectedIds: string[]) {
+  onCompareFromModal(selectedIds: string[]) {
     this.comparableItems.emit(selectedIds)
-    debugger
   }
 
   onVisualizeFromModal(id: string) {
