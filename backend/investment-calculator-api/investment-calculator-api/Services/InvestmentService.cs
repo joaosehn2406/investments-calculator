@@ -97,4 +97,11 @@ public class InvestmentService
 
     return await query.ToListAsync();
   }
+
+  public async Task<Investment?> GetInvestmentById(Guid id)
+  {
+    return await _db.Investments
+      .Include(i => i.Results)
+      .FirstOrDefaultAsync(i => i.Id == id);
+  }
 }
