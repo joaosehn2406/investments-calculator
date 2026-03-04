@@ -18,6 +18,7 @@ export class ModalComponent {
   closeModal = output<void>();
   comparableItems = output<string[]>();
   visualizeItem = output<string>()
+  deleteItem = output<string>()
 
   searchTerm = signal('');
   selectedIds = signal<string[]>([]);
@@ -85,5 +86,11 @@ export class ModalComponent {
   onClickVisualize() {
     this.visualizeItem.emit(<string>this.selectedIds().at(0))
     this.onCloseModal();
+  }
+
+  onClickDelete() {
+    if (this.selectedIds().length < 1) return
+    this.deleteItem.emit(<string>this.selectedIds().at(0))
+    this.onCloseModal()
   }
 }

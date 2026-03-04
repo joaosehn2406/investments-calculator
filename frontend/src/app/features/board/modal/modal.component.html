@@ -54,14 +54,22 @@
               class="view-investment-button"
               (click)="onClickVisualize()">VISUALIZE
             </button>
+
+            <button
+              type="button"
+              class="delete-investment-button"
+              (click)="onClickDelete()"> DELETE
+            </button>
           }
 
-          <button
-            type="button"
-            class="compare-button"
-            (click)="onClickCompare()"
-            [disabled]="toastService.isVisible()">COMPARE
-          </button>
+          @if (selectedIds().length === 2) {
+            <button
+              type="button"
+              class="compare-button"
+              (click)="onClickCompare()"
+              [disabled]="toastService.isVisible()">COMPARE
+            </button>
+          }
         </div>
 
       </div>

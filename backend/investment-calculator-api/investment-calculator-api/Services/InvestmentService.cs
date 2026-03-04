@@ -123,7 +123,7 @@ public class InvestmentService
     );
   }
 
-  public async Task<CompareResult?> CompareInvestments(List<Guid> ids)
+  public async Task<NetworkResult?> CompareInvestments(List<Guid> ids)
   {
     var investments = await _db.Investments
       .Where(i => ids.Contains(i.Id))
@@ -132,12 +132,12 @@ public class InvestmentService
 
     if (investments.Count != ids.Count)
     {
-      return CompareResult.Fail("One or more investments not found");
+      return NetworkResult.Fail("One or more investments not found");
     };
 
     if (investments[0].InvestmentType != investments[1].InvestmentType)
     {
-      return CompareResult.Fail("Invesments must have the same type to compare");
+      return NetworkResult.Fail("Invesments must have the same type to compare");
     }
 
     var items = investments.Select(inv => new InvestmentDetailsResponse(
@@ -156,6 +156,25 @@ public class InvestmentService
       )).ToList()
     )).ToList();
 
-    return CompareResult.Ok(new CompareInvestmentResponse(items));
+    return NetworkResult.Ok(new CompareInvestmentResponse(items));
+  }
+
+  public async Task<NetworkResult?> DeleteInvestmentById(Guid id)
+  {
+    var investment = await _db.Investments
+      .Where(i => i.Id.Equals(id))
+      .Include(i => i.Results)
+      .FirstOrDefaultAsync();
+
+    if (investment is null)
+    {
+      return NetworkResult.Fail("Investment not found");
+    }
+
+    _db.InvestmentResults.RemoveRange(investment.Results);
+    _db.Investments.Remove(investment);
+    await _db.SaveChangesAsync();
+
+    return NetworkResult.OkDelete(investment.Title);
   }
 }

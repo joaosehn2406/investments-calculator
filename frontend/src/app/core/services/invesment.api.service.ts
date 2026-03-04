@@ -41,4 +41,8 @@ export class InvestmentApiService {
     const params = new HttpParams({fromObject: {ids}})
     return this.http.get<CompareInvestmentResponse>(`${this.baseUrl}/compare`, {params})
   }
+
+  deleteInvestmentById(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`)
+  }
 }

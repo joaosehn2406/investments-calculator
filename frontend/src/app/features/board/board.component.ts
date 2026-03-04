@@ -24,6 +24,7 @@ export class BoardComponent {
   calculate = output<BoardModel>();
   comparableItems = output<string[]>();
   visualizeItem = output<string>()
+  deleteItem = output<string>()
   modalLoading = output<boolean>()
 
   shouldCleanInputs = input<boolean>()
@@ -108,5 +109,9 @@ export class BoardComponent {
 
   onVisualizeFromModal(id: string) {
     this.visualizeItem.emit(id)
+  }
+
+  onDeleteFromModal(id: string) {
+    this.deleteItem.emit(id)
   }
 }

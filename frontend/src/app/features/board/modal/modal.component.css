@@ -193,7 +193,8 @@
   color: #efefef;
 }
 
-.compare-button {
+.compare-button,
+.delete-investment-button {
   width: 100%;
   padding: 7px;
   margin-top: 14px;
@@ -212,6 +213,16 @@
   background: #9af4c1;
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.delete-investment-button {
+  background: rgba(255, 80, 80, 0.15);
+  color: #ff6b6b;
+}
+
+.delete-investment-button:hover {
+  background: rgba(255, 80, 80, 0.25);
+  color: #ff8080;
 }
 
 .view-investment-button {

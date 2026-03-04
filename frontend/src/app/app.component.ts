@@ -115,4 +115,17 @@ export class AppComponent {
         });
     }
   }
+
+  onHandleDelete(id: string) {
+    this.isLoading.set(true);
+
+    this.investmentApiService.deleteInvestmentById(id)
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.toastService.show('Investment deleted successfully', 'success');
+        },
+        error: (err) => this.toastService.show(err?.error?.error ?? "Failed to delete investment", 'error')
+      });
+  }
 }

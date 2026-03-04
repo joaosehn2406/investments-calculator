@@ -65,4 +65,15 @@ public class InvestmentController : ControllerBase
 
     return Ok(result);
   }
+
+  [HttpDelete("{id:guid}")]
+  public async Task<IActionResult> DeleteInvestmentById(Guid id)
+  {
+    var result = await _investmentService.DeleteInvestmentById(id);
+
+    if (!result.Success)
+      return NotFound(new { error = result.Error });
+
+    return NoContent();
+  }
 }

@@ -3,7 +3,7 @@
 <main>
   <app-board (calculate)="onCalculate($event)" (comparableItems)="onHandleComparison($event)"
              [shouldCleanInputs]="shouldCleanInputs()" (modalLoading)="isLoading.set($event)"
-             (visualizeItem)="onHandleComparison([$event])"/>
+             (visualizeItem)="onHandleComparison([$event])" (deleteItem)="onHandleDelete($event)"/>
 
   @if (isLoading()) {
     <div class="loading-overlay">
