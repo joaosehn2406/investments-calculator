@@ -2,7 +2,7 @@
 
 namespace investment_calculator_api.DTO;
 
-public record CalculationRequest(
+public record CalculateSimulationRequest(
 
 	[Required(ErrorMessage = "Cannot be blank")]
   [Range(0.01, 9.9e14, ErrorMessage = "InitialInvestment must be greater than zero")]
@@ -18,7 +18,7 @@ public record CalculationRequest(
   int? Duration,
 
   [Required(ErrorMessage = "Period cannot be blank")]
-  string? Period,
+  string? InterestType,
 
   [Required(ErrorMessage = "Currency cannot be blank")]
   string? Currency

@@ -10,6 +10,6 @@ public class AppDbContext : DbContext
   {
   }
 
-  public DbSet<Investment> Investments { get; set; }
-  public DbSet<InvestmentResult> InvestmentResults { get; set; }
+  public DbSet<Simulation> Simulation { get; set; }
+  public DbSet<SimulationResults> SimulationResults { get; set; }
 }

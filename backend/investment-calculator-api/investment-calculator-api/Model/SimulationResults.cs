@@ -1,6 +1,6 @@
 ﻿namespace investment_calculator_api.Model;
 
-public class InvestmentResult
+public class SimulationResults
 {
   public Guid Id { get; set; }
   public Guid InvestmentId { get; set; }
@@ -10,5 +10,5 @@ public class InvestmentResult
   public decimal TotalInterest { get; set; }
   public decimal InvestedCapital { get; set; }
 
-  public Investment Investment { get; set; } = null!;
+  public Simulation Simulation { get; set; } = null!;
 }

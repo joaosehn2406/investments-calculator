@@ -4,10 +4,10 @@ public record NetworkResult(
   bool Success,
   string? Error,
   string? SuccessMessage,
-  CompareInvestmentResponse? Data
+  CompareSimulationResponse? Data
 )
 {
-  public static NetworkResult Ok(CompareInvestmentResponse data)
+  public static NetworkResult Ok(CompareSimulationResponse data)
   {
     return new NetworkResult(true, null, null, data);
   }

@@ -14,7 +14,7 @@ public class InvestmentController : ControllerBase
     => _investmentService = investmentService;
 
   [HttpPost("calculate")]
-  public IActionResult Calculate([FromBody] CalculationRequest request)
+  public IActionResult Calculate([FromBody] CalculateSimulationRequest request)
   {
     if (!ModelState.IsValid)
       return BadRequest(ModelState);
@@ -24,7 +24,7 @@ public class InvestmentController : ControllerBase
   }
 
   [HttpPost("save")]
-  public async Task<IActionResult> SaveInvestment([FromBody] SaveInvestmentRequest request)
+  public async Task<IActionResult> SaveInvestment([FromBody] SaveSimulationRequest request)
   {
     if (!ModelState.IsValid)
       return BadRequest(ModelState);

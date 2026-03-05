@@ -12,9 +12,9 @@ public class InvestmentService
   public InvestmentService(AppDbContext db)
     => _db = db;
 
-  public async Task<Guid> Save(SaveInvestmentRequest request)
+  public async Task<Guid> Save(SaveSimulationRequest request)
   {
-    var investment = new Investment
+    var investment = new Simulation
     {
       Id = Guid.NewGuid(),
       Title = request.Title,
@@ -23,7 +23,7 @@ public class InvestmentService
       InvestmentType = request.InvestmentType,
       CalculatedAt = DateTime.UtcNow,
 
-      Results = request.Results.Select(r => new InvestmentResult
+      Results = request.Results.Select(r => new SimulationResults
       {
         Id = Guid.NewGuid(),
         Period = r.Period,
@@ -34,20 +34,20 @@ public class InvestmentService
       }).ToList()
     };
 
-    _db.Investments.Add(investment);
+    _db.Simulation.Add(investment);
     await _db.SaveChangesAsync();
 
     return investment.Id;
   }
 
-  public CalculationResponse Calculate(CalculationRequest request)
+  public CalculateSimulationResponse Calculate(CalculateSimulationRequest request)
   {
     var initialInvestment = request.InitialInvestment!.Value;
     var financialContribution = request.FinancialContribution!.Value;
     var expectedReturn = request.ExpectedReturn!.Value;
     var duration = request.Duration!.Value;
 
-    var isMonthly = string.Equals(request.Period, "month", StringComparison.OrdinalIgnoreCase);
+    var isMonthly = string.Equals(request.InterestType, "month", StringComparison.OrdinalIgnoreCase);
 
     var periodsTotal = isMonthly ? duration * 12 : duration;
     var rate = isMonthly
@@ -60,7 +60,7 @@ public class InvestmentService
     var balance = initialInvestment;
     var totalInvestment = initialInvestment;
 
-    var results = new List<InvestmentPeriodResult>(periodsTotal);
+    var results = new List<CalculateSimulationResult>(periodsTotal);
 
     for (var period = 1; period <= periodsTotal; period++)
     {
@@ -69,23 +69,23 @@ public class InvestmentService
       totalInvestment += contribution;
       var totalInterest = balance - totalInvestment;
 
-      results.Add(new InvestmentPeriodResult(
+      results.Add(new CalculateSimulationResult(
         Period: period,
         InvestmentValue: Math.Round(balance, 2),
         InterestYear: Math.Round(interestPeriod, 2),
         TotalInterest: Math.Round(totalInterest, 2),
         InvestedCapital: Math.Round(totalInvestment, 2),
-        InvestmentType: request.Period,
+        InvestmentType: request.InterestType,
         Currency: request.Currency
       ));
     }
 
-    return new CalculationResponse(results);
+    return new CalculateSimulationResponse(results);
   }
 
-  public async Task<List<Investment>> GetAllInvestments(string? search)
+  public async Task<List<Simulation>> GetAllInvestments(string? search)
   {
-    var query = _db.Investments.AsQueryable();
+    var query = _db.Simulation.AsQueryable();
 
     if (!string.IsNullOrWhiteSpace(search))
     {
@@ -98,22 +98,22 @@ public class InvestmentService
     return await query.ToListAsync();
   }
 
-  public async Task<InvestmentDetailsResponse?> GetInvestmentById(Guid id)
+  public async Task<SimulationDetailsResponse?> GetInvestmentById(Guid id)
   {
-    var investment = await _db.Investments
+    var investment = await _db.Simulation
       .Include(i => i.Results.OrderBy(result => result.Period))
       .FirstOrDefaultAsync(i => i.Id == id);
 
     if (investment is null) return null;
 
-    return new InvestmentDetailsResponse(
+    return new SimulationDetailsResponse(
       investment.Id,
       investment.Title,
       investment.Description,
       investment.Currency,
       investment.InvestmentType,
       investment.CalculatedAt,
-      investment.Results.Select(result => new InvestmentResultDto(
+      investment.Results.Select(result => new SimulationResult(
         result.Period,
         result.InvestmentValue,
         result.InterestYear,
@@ -125,7 +125,7 @@ public class InvestmentService
 
   public async Task<NetworkResult?> CompareInvestments(List<Guid> ids)
   {
-    var investments = await _db.Investments
+    var investments = await _db.Simulation
       .Where(i => ids.Contains(i.Id))
       .Include(i => i.Results.OrderBy(r => r.Period))
       .ToListAsync();
@@ -140,14 +140,14 @@ public class InvestmentService
       return NetworkResult.Fail("Invesments must have the same type to compare");
     }
 
-    var items = investments.Select(inv => new InvestmentDetailsResponse(
+    var items = investments.Select(inv => new SimulationDetailsResponse(
       inv.Id,
       inv.Title,
       inv.Description,
       inv.Currency,
       inv.InvestmentType,
       inv.CalculatedAt,
-      inv.Results.Select(r => new InvestmentResultDto(
+      inv.Results.Select(r => new SimulationResult(
         r.Period,
         r.InvestmentValue,
         r.InterestYear,
@@ -156,12 +156,12 @@ public class InvestmentService
       )).ToList()
     )).ToList();
 
-    return NetworkResult.Ok(new CompareInvestmentResponse(items));
+    return NetworkResult.Ok(new CompareSimulationResponse(items));
   }
 
   public async Task<NetworkResult?> DeleteInvestmentById(Guid id)
   {
-    var investment = await _db.Investments
+    var investment = await _db.Simulation
       .Where(i => i.Id.Equals(id))
       .Include(i => i.Results)
       .FirstOrDefaultAsync();
@@ -171,8 +171,8 @@ public class InvestmentService
       return NetworkResult.Fail("Investment not found");
     }
 
-    _db.InvestmentResults.RemoveRange(investment.Results);
-    _db.Investments.Remove(investment);
+    _db.SimulationResults.RemoveRange(investment.Results);
+    _db.Simulation.Remove(investment);
     await _db.SaveChangesAsync();
 
     return NetworkResult.OkDelete(investment.Title);

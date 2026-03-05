@@ -1,6 +1,6 @@
 ﻿namespace investment_calculator_api.Model;
 
-public class Investment
+public class Simulation
 {
   public Guid Id { get; set; }
   public string Title { get; set; }
@@ -9,5 +9,5 @@ public class Investment
   public string InvestmentType { get; set; }
   public DateTime CalculatedAt { get; set; }
 
-  public List<InvestmentResult> Results { get; set; } = [];
+  public List<SimulationResults> Results { get; set; } = [];
 }

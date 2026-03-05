@@ -1,11 +1,9 @@
 ﻿namespace investment_calculator_api.DTO;
 
-public record InvestmentPeriodResult(
+public record SimulationResult(
   int Period,
   decimal InvestmentValue,
   decimal InterestYear,
   decimal TotalInterest,
-  decimal InvestedCapital,
-  string InvestmentType,
-  string Currency
+  decimal InvestedCapital
 );

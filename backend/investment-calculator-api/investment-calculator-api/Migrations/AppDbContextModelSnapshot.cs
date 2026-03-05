@@ -22,7 +22,7 @@ namespace investment_calculator_api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("investment_calculator_api.Model.Investment", b =>
+            modelBuilder.Entity("investment_calculator_api.Model.Simulation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,10 +49,10 @@ namespace investment_calculator_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Investments");
+                    b.ToTable("Simulation");
                 });
 
-            modelBuilder.Entity("investment_calculator_api.Model.InvestmentResult", b =>
+            modelBuilder.Entity("investment_calculator_api.Model.SimulationResults", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,28 +73,31 @@ namespace investment_calculator_api.Migrations
                     b.Property<int>("Period")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("SimulationId")
+                        .HasColumnType("uuid");
+
                     b.Property<decimal>("TotalInterest")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InvestmentId");
+                    b.HasIndex("SimulationId");
 
-                    b.ToTable("InvestmentResults");
+                    b.ToTable("SimulationResults");
                 });
 
-            modelBuilder.Entity("investment_calculator_api.Model.InvestmentResult", b =>
+            modelBuilder.Entity("investment_calculator_api.Model.SimulationResults", b =>
                 {
-                    b.HasOne("investment_calculator_api.Model.Investment", "Investment")
+                    b.HasOne("investment_calculator_api.Model.Simulation", "Simulation")
                         .WithMany("Results")
-                        .HasForeignKey("InvestmentId")
+                        .HasForeignKey("SimulationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Investment");
+                    b.Navigation("Simulation");
                 });
 
-            modelBuilder.Entity("investment_calculator_api.Model.Investment", b =>
+            modelBuilder.Entity("investment_calculator_api.Model.Simulation", b =>
                 {
                     b.Navigation("Results");
                 });

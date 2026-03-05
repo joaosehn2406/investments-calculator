@@ -2,10 +2,10 @@
 
 namespace investment_calculator_api.DTO;
 
-public record SaveInvestmentRequest(
+public record SaveSimulationRequest(
   [Required] string Title,
   [Required] string Description,
   [Required] string Currency,
   [Required] string InvestmentType,
-  [Required] List<InvestmentResultDto> Results
+  [Required] List<SimulationResult> Results
 );
