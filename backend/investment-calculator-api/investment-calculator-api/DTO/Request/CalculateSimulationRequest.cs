@@ -17,7 +17,7 @@ public record CalculateSimulationRequest(
   [Range(1, 100, ErrorMessage = "Duration must be at least 1 year")]
   int? Duration,
 
-  [Required(ErrorMessage = "Period cannot be blank")]
+  [Required(ErrorMessage = "Interest type cannot be blank")]
   string? InterestType,
 
   [Required(ErrorMessage = "Currency cannot be blank")]

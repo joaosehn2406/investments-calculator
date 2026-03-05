@@ -14,7 +14,7 @@ public class InvestmentService
 
   public async Task<Guid> Save(SaveSimulationRequest request)
   {
-    var investment = new Simulation
+    var simulation = new Simulation
     {
       Id = Guid.NewGuid(),
       Title = request.Title,
@@ -34,10 +34,10 @@ public class InvestmentService
       }).ToList()
     };
 
-    _db.Simulation.Add(investment);
+    _db.Simulation.Add(simulation);
     await _db.SaveChangesAsync();
 
-    return investment.Id;
+    return simulation.Id;
   }
 
   public CalculateSimulationResponse Calculate(CalculateSimulationRequest request)
