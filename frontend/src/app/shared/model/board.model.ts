@@ -14,6 +14,6 @@ export interface BoardModel {
   financialContribution: number;
   expectedReturn: number;
   duration: number;
-  period: PeriodType;
+  interestType: PeriodType;
   currency: CurrencyType;
 }

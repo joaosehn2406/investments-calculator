@@ -44,8 +44,8 @@ export class AppComponent {
       )
       .subscribe({
         next: (response) => {
-          this.result.set(response.results);
-          this.selectedPeriod.set(data.period);
+          this.result.set(response.calculateSimulationResult);
+          this.selectedPeriod.set(data.interestType);
           this.selectedCurrency.set(data.currency);
           this.selectedForComparison.set([]);
           this.shouldCleanInputs.set(false);
@@ -89,7 +89,7 @@ export class AppComponent {
         .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe({
           next: (response) => {
-            const mapped: LocalStorageModel[] = response.comparableItems.map(item => ({
+            const mapped: LocalStorageModel[] = response.data.comparableSimulations.map(item => ({
               id: item.id,
               title: item.title,
               description: item.description,

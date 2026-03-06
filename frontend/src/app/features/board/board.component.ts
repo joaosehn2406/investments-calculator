@@ -46,7 +46,7 @@ export class BoardComponent {
           financialContribution: null,
           expectedReturn: null,
           duration: null,
-          period: 'year',
+          interestType: 'year',
           currency: this.currencyTypes[0]
         });
       }
@@ -72,7 +72,7 @@ export class BoardComponent {
       Validators.min(1),
       Validators.max(80)
     ]],
-    period: ['year', Validators.required],
+    interestType: ['year', Validators.required],
     currency: [this.currencyTypes[0], Validators.required]
   });
 
@@ -90,7 +90,7 @@ export class BoardComponent {
         this.savedInvestments.set(investments)
         this.showModal.set(true)
         this.modalLoading.emit(false)
-      } ,
+      },
       error: () => {
         this.toastService.show('Failed to load investments', 'error')
         this.modalLoading.emit(false)
