@@ -1,4 +1,6 @@
-﻿namespace investment_calculator_api.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace investment_calculator_api.Model;
 
 public class SimulationResults
 {
@@ -10,5 +12,6 @@ public class SimulationResults
   public decimal TotalInterest { get; set; }
   public decimal InvestedCapital { get; set; }
 
+  [ForeignKey("InvestmentId")]
   public Simulation Simulation { get; set; } = null!;
 }

@@ -49,7 +49,7 @@ namespace investment_calculator_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Simulation");
+                    b.ToTable("Simulation", (string)null);
                 });
 
             modelBuilder.Entity("investment_calculator_api.Model.SimulationResults", b =>
@@ -83,7 +83,7 @@ namespace investment_calculator_api.Migrations
 
                     b.HasIndex("SimulationId");
 
-                    b.ToTable("SimulationResults");
+                    b.ToTable("SimulationResults", (string)null);
                 });
 
             modelBuilder.Entity("investment_calculator_api.Model.SimulationResults", b =>
