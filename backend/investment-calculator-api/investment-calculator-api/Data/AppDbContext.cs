@@ -12,4 +12,12 @@ public class AppDbContext : DbContext
 
   public DbSet<Simulation> Simulation { get; set; }
   public DbSet<SimulationResults> SimulationResults { get; set; }
+
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+  {
+    modelBuilder.Entity<SimulationResults>()
+      .HasOne(r => r.Simulation)
+      .WithMany(s => s.Results)
+      .HasForeignKey(r => r.InvestmentId);
+  }
 }
